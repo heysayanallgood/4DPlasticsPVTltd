@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 🔹 NAVBAR -->
+    <header class="navbar">
+        <div class="logo reveal">4D Plastics</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="virtual-tour.html">Virtual Tour</a></li>
+
+                <li class="cart-nav">
+                    <a href="cart.html" style="display: flex; align-items: center; gap: 5px; color: #ffd36b;">
+                        🛒 <span id="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 🔹 CART SECTION -->
+    <section class="about" style="min-height:100vh; padding-top:100px;">
+        <div class="background">
+            <span></span><span></span><span></span>
+        </div>
+
+        <div class="cart-container reveal">
+            <div class="cart-header">
+                <h2>Your Shopping Cart</h2>
+                <button onclick="clearCart()" class="remove-item-btn" style="font-size: 0.9rem;">Clear All</button>
+            </div>
+
+            <div id="cart-content">
+                <!-- Cart Items Table will be injected here -->
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items-body">
+                        <!-- JS renders items here -->
+                    </tbody>
+                </table>
+
+                <div class="cart-summary">
+                    <div class="summary-box">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (5%)</span>
+                            <span id="tax">₹0</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="grand-total">₹0</span>
+                        </div>
+
+                        <button class="checkout-btn-main" onclick="proceedToCheckout()">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="empty-cart" class="empty-cart-msg" style="display: none;">
+                <p>Your cart is empty.</p>
+                <a href="products.html" class="btn" style="margin-top: 20px;">Browse Products</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer reveal" id="contact">
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Registered Office</h3>
+                <p>
+                    20/C, Surath Banerjee Lane,<br>
+                    Konnagar, Hooghly,<br>
+                    Serampore Uttarpara,<br>
+                    West Bengal – 712235
+                </p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919432249082" class="contact-link">+91 9432249082</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">
+                        suparnasubhashis@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Reveal Animation
+        const revealElements = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, { threshold: 0.15 });
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+
+    <script>
+        /* =========================
+           CART PAGE LOGIC
+        ========================= */
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function renderCart() {
+            const tbody = document.getElementById("cart-items-body");
+            const emptyMsg = document.getElementById("empty-cart");
+            const cartContent = document.getElementById("cart-content");
+            const countBadge = document.getElementById("cart-count");
+
+            // Update Badge
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            countBadge.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartContent.style.display = "none";
+                emptyMsg.style.display = "block";
+                return;
+            }
+
+            cartContent.style.display = "block";
+            emptyMsg.style.display = "none";
+            tbody.innerHTML = "";
+
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>
+                        <div class="cart-item-name">${item.name}</div>
+                    </td>
+                    <td>₹${item.price}</td>
+                    <td>
+                        <div class="cart-qty-control">
+                            <button class="qty-btn" onclick="updateQty(${index}, -1)">−</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                        </div>
+                    </td>
+                    <td>₹${itemTotal}</td>
+                    <td>
+                        <button class="remove-item-btn" onclick="removeItem(${index})">×</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Summary
+            const tax = Math.round(subtotal * 0.05);
+            const grandTotal = subtotal + tax;
+
+            document.getElementById("subtotal").textContent = `₹${subtotal}`;
+            document.getElementById("tax").textContent = `₹${tax}`;
+            document.getElementById("grand-total").textContent = `₹${grandTotal}`;
+        }
+
+        function updateQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            saveAndRender();
+        }
+
+        function removeItem(index) {
+            if (confirm("Remove this item?")) {
+                cart.splice(index, 1);
+                saveAndRender();
+            }
+        }
+
+        function clearCart() {
+            if (confirm("Clear entire cart?")) {
+                cart = [];
+                saveAndRender();
+            }
+        }
+
+        function saveAndRender() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            // Redirect to checkout page or show modal
+            // Since checkout.html exists, we can use it, but logic needs to be verified there.
+            // Or we just simulate checkout here for now as requested "make a new page".
+            // Let's redirect to checkout.html if it's compatible, else we can build a simple checkout flow here.
+            // User request: "make a new page on clicking the cart button in product page".
+            // I've made cart.html. Checkout can be a separate step.
+            window.location.href = "checkout.html";
+        }
+
+        // Initial Render
+        renderCart();
+    </script>
+</body>
+
+</html>

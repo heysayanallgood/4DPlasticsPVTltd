@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>4D Plastics Private Limited</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 🔮 PRELOADER -->
+    <div id="preloader">
+        <div class="loader-text">Loading 4D Plastics...</div>
+        <div class="loader-ring"></div>
+    </div>
+
+    <!-- 🔹 NAVBAR -->
+    <header class="navbar">
+        <div class="logo reveal">4D Plastics</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="virtual-tour.html">Virtual Tour</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 🔹 HERO -->
+    <section class="hero reveal" id="home">
+        <div class="wave-divider reveal"></div>
+        <div class="background">
+            <span></span><span></span><span></span>
+        </div>
+
+        <div class="hero-content">
+            <h1>4D Plastics Private Limited</h1>
+            <p>Precision in Plastic Manufacturing</p>
+            <a href="#about" class="btn">Discover More</a>
+        </div>
+    </section>
+
+    <!-- 🔹 ABOUT -->
+    <section class="about reveal" id="about">
+        <div class="wave-divider reverse"></div>
+        <h2>About 4D Plastics</h2>
+        <br></br>
+        <p class="about-subtitle">
+            A modern plastic manufacturing company focused on quality and durability.
+        </p>
+        <br></br>
+        <div class="about-cards">
+            <div class="card reveal">
+                <h3>🏭 Who We Are</h3>
+                <p>Plastic manufacturing company delivering precision-engineered products.</p>
+            </div>
+            <div class="card reveal">
+                <h3>🎯 Our Mission</h3>
+                <p>To manufacture affordable, durable, and reliable plastic products.</p>
+            </div>
+            <div class="card reveal">
+                <h3>🌱 Our Vision</h3>
+                <p>To grow as a trusted and sustainable plastic manufacturing brand.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🔹 FOOTER / CONTACT -->
+    <footer class="footer reveal" id="contact">
+
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Registered Office</h3>
+                <p>
+                    20/C, Surath Banerjee Lane,<br>
+                    Konnagar, Hooghly,<br>
+                    Serampore Uttarpara,<br>
+                    West Bengal – 712235
+                </p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919432249082" class="contact-link">+91 9432249082</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">
+                        suparnasubhashis@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <div class="contact-form reveal">
+            <h2>Send Us a Message</h2>
+            <form id="contact-form">
+                <div class="form-group reveal">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+
+                <div class="form-group reveal">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+
+                <div class="form-group reveal">
+                    <textarea placeholder="Your Message" required></textarea>
+                </div>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+
+        <!-- MAP -->
+        <center>
+            <div class="map-card reveal">
+                <h2>Our Location</h2>
+                <div class="map-wrapper">
+                    <iframe
+                        src="https://www.google.com/maps?q=Konnagar,Hooghly,West%20Bengal,712235&output=embed"></iframe>
+                    <div class="map-marker"></div>
+                </div>
+            </div>
+        </center>
+
+
+
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+    <!-- 🔹 BACK TO TOP BUTTON -->
+    <button id="backToTop">↑</button>
+
+    <script>
+        const backToTopBtn = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = "1";
+                backToTopBtn.style.pointerEvents = "auto";
+            } else {
+                backToTopBtn.style.opacity = "0";
+                backToTopBtn.style.pointerEvents = "none";
+            }
+        });
+
+        backToTopBtn.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+    <script src="preloader.js"></script>
+    <script>
+        const form = document.getElementById("contact-form");
+        const formGroups = document.querySelectorAll(".form-group");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+
+            formGroups.forEach(group => {
+                const input = group.querySelector("input, textarea");
+
+                if (!input.value.trim()) {
+                    group.classList.remove("success");
+                    group.classList.add("error");
+                    isValid = false;
+                } else {
+                    group.classList.remove("error");
+                    group.classList.add("success");
+                }
+            });
+
+            if (isValid) {
+                alert("Form submitted successfully!");
+                form.reset();
+
+                // Remove green borders after reset
+                formGroups.forEach(group => {
+                    group.classList.remove("success");
+                });
+            }
+        });
+    </script>
+    <script>
+        const revealElements = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+
+    <!-- =========================
+     BRAND END BANNER
+========================= -->
+    <section class="brand-banner">
+        <div class="stars">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="brand-glow"></div>
+
+        <img src="D:\coding_contents\4d-plastics-website\Screenshot 2026-02-06 132339.png"
+            alt="4D Plastics Private Limited Logo" class="brand-logo">
+
+        <h2>4D Plastics Private Limited</h2>
+        <p>Precision • Quality • Trust</p>
+    </section>
+
+</body>
+
+</html>

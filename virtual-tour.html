@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Factory Tour - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="virtual-tour.css">
+</head>
+
+<body>
+
+    <!-- 🔮 PRELOADER -->
+    <div id="preloader">
+        <div class="loader-text">Loading 4D Plastics...</div>
+        <div class="loader-ring"></div>
+    </div>
+
+    <!-- 🔹 NAVBAR -->
+    <header class="navbar">
+        <div class="logo reveal">4D Plastics</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="virtual-tour.html">Virtual Tour</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 🔹 TOUR SECTION -->
+    <section class="tour">
+        <div class="background">
+            <span></span><span></span><span></span>
+        </div>
+
+        <div class="tour-header">
+            <h1>Virtual Factory Tour</h1>
+            <p class="subtitle">Experience our state-of-the-art manufacturing process from the comfort of your screen.
+            </p>
+        </div>
+
+        <!-- TIMELINE INDICATOR -->
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            <div class="timeline-progress" id="timelineProgress"></div>
+            <!-- Steps will be injected by JS -->
+            <div id="timelineSteps" style="display: contents;"></div>
+        </div>
+
+        <!-- GLASSMORPHISM CARD -->
+        <div class="tour-card">
+            <div class="video-wrapper">
+                <video id="tourVideo" autoplay muted loop playsinline>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="fullscreen-btn" onclick="openFullscreen()" title="Fullscreen">⛶</button>
+            </div>
+
+            <div class="tour-info">
+                <div id="textContainer">
+                    <h2 id="tourTitle">Loading...</h2>
+                    <p id="tourDesc">Please wait...</p>
+                </div>
+
+                <div class="card-controls">
+                    <button class="btn-nav" onclick="prevStep()">← Prev</button>
+                    <button class="btn-nav primary" onclick="nextStep()">Next Step →</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer reveal" id="contact">
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Registered Office</h3>
+                <p>
+                    20/C, Surath Banerjee Lane,<br>
+                    Konnagar, Hooghly,<br>
+                    Serampore Uttarpara,<br>
+                    West Bengal – 712235
+                </p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919432249082" class="contact-link">+91 9432249082</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">
+                        suparnasubhashis@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="preloader.js"></script>
+    <script src="virtual-tour.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 🔮 PRELOADER -->
+    <div id="preloader">
+        <div class="loader-text">Loading 4D Plastics...</div>
+        <div class="loader-ring"></div>
+    </div>
+
+    <!-- 🔹 NAVBAR -->
+    <header class="navbar">
+        <div class="logo reveal">4D Plastics</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="virtual-tour.html">Virtual Tour</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- 🔹 GALLERY SECTION -->
+    <section class="about" style="min-height:100vh; padding-top:100px; padding-bottom:100px; position:relative;">
+        <div class="premium-bg-animated"></div>
+        <div class="gold-dust">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="gallery-header reveal">
+            <h2 class="text-premium-heading">Visual Showcase</h2>
+            <p class="about-subtitle" style="color:#ccc;">
+                Explore our state-of-the-art manufacturing facility and premium product range.
+            </p>
+        </div>
+
+        <!-- 🧭 GALLERY CATEGORY BUTTONS -->
+        <div class="gallery-tabs reveal" style="position: relative; z-index: 2;">
+            <button class="tab-btn active" onclick="filterGallery('all', this)">All</button>
+            <button class="tab-btn" onclick="filterGallery('factory', this)">Factory</button>
+            <button class="tab-btn" onclick="filterGallery('molding', this)">Machinery</button>
+            <button class="tab-btn" onclick="filterGallery('products', this)">Products</button>
+        </div>
+
+        <!-- 🖼️ MASONRY GALLERY GRID -->
+        <div class="gallery-grid" id="galleryGrid">
+
+            <!-- FACTORY IMAGES -->
+            <div class="gallery-item" data-category="factory">
+                <img src="WhatsApp Image 2026-02-05 at 6.49.21 PM.jpeg" alt="Factory Floor Overview">
+                <div class="overlay">
+                    <span class="zoom-icon">🔍</span>
+                    <p>Factory Floor</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="factory">
+                <img src="WhatsApp Image 2026-02-05 at 6.49.25 PM.jpeg" alt="Production Line">
+                <div class="overlay">
+                    <span class="zoom-icon">🔍</span>
+                    <p>Production Line</p>
+                </div>
+            </div>
+
+            <!-- MACHINERY IMAGES -->
+            <div class="gallery-item" data-category="molding">
+                <img src="WhatsApp Image 2026-02-05 at 6.49.28 PM (1).jpeg" alt="Injection Molding Machine">
+                <div class="overlay">
+                    <span class="zoom-icon">🔍</span>
+                    <p>Molding Machine</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="molding">
+                <img src="WhatsApp Image 2026-02-05 at 7.35.45 PM.jpeg" alt="High Precision Machinery">
+                <div class="overlay">
+                    <span class="zoom-icon">🔍</span>
+                    <p>Precision Tech</p>
+                </div>
+            </div>
+
+            <!-- PRODUCTS IMAGES -->
+            <div class="gallery-item" data-category="products">
+                <img src="WhatsApp Image 2026-02-05 at 6.49.24 PM.jpeg" alt="Premium Jars">
+                <div class="overlay">
+                    <span class="zoom-icon">🔍</span>
+                    <p>Premium Jars</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="products">
+                <img src="WhatsApp Image 2026-02-05 at 7.35.44 PM (2).jpeg" alt="Bulk Storage Containers">
+                <div class="overlay">
+                    <span class="zoom-icon">🔍</span>
+                    <p>Storage Units</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="products">
+                <img src="WhatsApp Image 2026-02-05 at 6.50.14 PM.jpeg" alt="Finished Goods">
+                <div class="overlay">
+                    <span class="zoom-icon">🔍</span>
+                    <p>Finished Goods</p>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="factory">
+                <img src="WhatsApp Image 2026-02-05 at 7.35.44 PM.jpeg" alt="Quality Control">
+                <div class="overlay">
+                    <span class="zoom-icon">🔍</span>
+                    <p>Quality Control</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer reveal" id="contact">
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Registered Office</h3>
+                <p>
+                    20/C, Surath Banerjee Lane,<br>
+                    Konnagar, Hooghly,<br>
+                    Serampore Uttarpara,<br>
+                    West Bengal – 712235
+                </p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919432249082" class="contact-link">+91 9432249082</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">
+                        suparnasubhashis@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- 🔍 FULLSCREEN IMAGE MODAL -->
+    <div class="image-modal" id="imageModal">
+        <span class="close-modal" onclick="closeImage()">&times;</span>
+
+        <!-- LEFT ARROW -->
+        <span class="nav-arrow left" onclick="prevImage()">&#10094;</span>
+
+        <div class="modal-content">
+            <img id="modalImage">
+            <p id="modalCaption"></p>
+            <!-- Timer Bar -->
+            <div class="slideshow-progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <!-- RIGHT ARROW -->
+        <span class="nav-arrow right" onclick="nextImage()">&#10095;</span>
+    </div>
+
+    <!-- 🔹 BACK TO TOP BUTTON -->
+    <button id="backToTop">↑</button>
+
+    <!-- SCRIPTS -->
+    <script src="preloader.js"></script>
+    <script>
+        // Back to Top Logic
+        const backToTopBtn = document.getElementById("backToTop");
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = "1";
+                backToTopBtn.style.pointerEvents = "auto";
+            } else {
+                backToTopBtn.style.opacity = "0";
+                backToTopBtn.style.pointerEvents = "none";
+            }
+        });
+        backToTopBtn.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        // Reveal Animation
+        const revealElements = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+
+    <!-- 🟢 VANILLA TILT for Luxury 3D Hover Effect -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script>
+        // Init Tilt on gallery items
+        VanillaTilt.init(document.querySelectorAll(".gallery-item"), {
+            max: 10,               // Max tilt rotation (degrees)
+            speed: 400,            // Speed of the enter/exit transition
+            glare: true,           // Add a light glare effect
+            "max-glare": 0.3,      // Opacity of the glare
+            scale: 1.02,           // Scale up slightly
+            perspective: 1000,     // Transform perspective
+            easing: "cubic-bezier(.03,.98,.52,.99)" // Apple-like easing
+        });
+    </script>
+
+    <script>
+        /* =========================
+           MODERN GALLERY LOGIC
+        ========================= */
+
+        // 1. Filtering
+        function filterGallery(category, btn) {
+            // Active Tab
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Filter Items
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category || (category === 'products' && item.dataset.category === 'jar')) {
+                    item.style.display = 'block';
+                    setTimeout(() => item.style.opacity = '1', 50);
+                } else {
+                    item.style.opacity = '0';
+                    setTimeout(() => item.style.display = 'none', 300);
+                }
+            });
+        }
+
+        // 2. Lightbox & Auto-Slideshow
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const progressBar = document.getElementById("progressBar");
+
+        let galleryImages = [];
+        let currentIndex = 0;
+        let slideshowTimer;
+        const SLIDE_DURATION = 10000; // 10 seconds
+
+        // Collect visible images
+        function updateGalleryImages() {
+            // Select only currently visible images based on filter
+            galleryImages = Array.from(document.querySelectorAll(".gallery-item"))
+                .filter(item => item.style.display !== 'none')
+                .map(item => item.querySelector("img"));
+        }
+
+        // Open Modal
+        document.addEventListener("click", function (e) {
+            if (e.target.closest(".gallery-item")) {
+                const item = e.target.closest(".gallery-item");
+                const img = item.querySelector("img");
+
+                updateGalleryImages();
+                currentIndex = galleryImages.indexOf(img);
+
+                openImage(img.src, img.alt);
+            }
+        });
+
+        function openImage(src, alt) {
+            modal.style.display = "flex";
+            modalImg.src = src;
+            document.getElementById("modalCaption").textContent = alt || "Gallery Image";
+            startSlideshow();
+        }
+
+        function closeImage() {
+            modal.style.display = "none";
+            modalImg.src = "";
+            stopSlideshow();
+        }
+
+        // Slideshow Logic
+        function startSlideshow() {
+            stopSlideshow(); // Clear existing
+
+            // Reset Bar
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0%';
+
+            // Force reflow
+            void progressBar.offsetWidth;
+
+            // Animate Bar
+            progressBar.style.transition = `width ${SLIDE_DURATION}ms linear`;
+            progressBar.style.width = '100%';
+
+            slideshowTimer = setTimeout(() => {
+                nextImage();
+            }, SLIDE_DURATION);
+        }
+
+        function stopSlideshow() {
+            clearTimeout(slideshowTimer);
+            progressBar.style.width = '0%';
+        }
+
+        function nextImage() {
+            if (galleryImages.length === 0) return;
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            updateModalContent();
+        }
+
+        function prevImage() {
+            if (galleryImages.length === 0) return;
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateModalContent();
+        }
+
+        function updateModalContent() {
+            modalImg.style.opacity = 0;
+            setTimeout(() => {
+                modalImg.src = galleryImages[currentIndex].src;
+                document.getElementById("modalCaption").textContent = galleryImages[currentIndex].alt || "Gallery Image";
+                modalImg.style.opacity = 1;
+                startSlideshow(); // Restart timer on change
+            }, 200);
+        }
+
+        // Controls
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeImage();
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (modal.style.display !== "flex") return;
+            if (e.key === "Escape") closeImage();
+            if (e.key === "ArrowRight") nextImage();
+            if (e.key === "ArrowLeft") prevImage();
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,567 @@
+/* =========================
+   LASER TECH PREMIUM GALLERY
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* BODY */
+body {
+    background: radial-gradient(circle at top, #050505, #000000);
+    color: #eaeaea;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(90deg, #0a0a0a, #111, #0a0a0a);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 60px;
+    z-index: 1000;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.25);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+}
+
+.nav-links a {
+    color: #dddddd;
+    text-decoration: none;
+}
+
+/* MAIN SECTION */
+.about {
+    background: linear-gradient(160deg, #050505, #0b0b0b);
+    position: relative;
+    overflow: hidden;
+}
+
+/* =========================
+   LASER PARTICLES (REUSING LEAVES STRUCTURE)
+========================= */
+
+.leaves {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.leaves span {
+    position: absolute;
+    width: 3px;
+    height: 120px;
+    background: linear-gradient(transparent,
+            rgba(0, 255, 255, 0.9),
+            transparent);
+    opacity: 0.6;
+    animation: laserFall 6s linear infinite;
+    filter: blur(0.3px);
+}
+
+/* RANDOM POSITIONS */
+.leaves span:nth-child(odd) {
+    background: linear-gradient(transparent, rgba(255, 0, 0, 0.8), transparent);
+}
+
+.leaves span:nth-child(1) {
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.leaves span:nth-child(2) {
+    left: 15%;
+    animation-delay: 1s;
+}
+
+.leaves span:nth-child(3) {
+    left: 25%;
+    animation-delay: 2s;
+}
+
+.leaves span:nth-child(4) {
+    left: 35%;
+    animation-delay: .5s;
+}
+
+.leaves span:nth-child(5) {
+    left: 45%;
+    animation-delay: 1.5s;
+}
+
+.leaves span:nth-child(6) {
+    left: 55%;
+    animation-delay: 2.5s;
+}
+
+.leaves span:nth-child(7) {
+    left: 65%;
+    animation-delay: 1.2s;
+}
+
+.leaves span:nth-child(8) {
+    left: 75%;
+    animation-delay: 2.2s;
+}
+
+.leaves span:nth-child(9) {
+    left: 85%;
+    animation-delay: .8s;
+}
+
+.leaves span:nth-child(10) {
+    left: 95%;
+    animation-delay: 1.8s;
+}
+
+@keyframes laserFall {
+    from {
+        top: -150px;
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.6;
+    }
+
+    to {
+        top: 110%;
+        opacity: 0;
+    }
+}
+
+/* =========================
+   HEADINGS
+========================= */
+
+.about h2 {
+    text-align: center;
+    font-size: 42px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    color: #ffffff;
+    text-shadow:
+        0 0 15px rgba(255, 0, 0, 0.7),
+        0 0 25px rgba(0, 255, 255, 0.4);
+}
+
+.about-subtitle {
+    text-align: center;
+    color: #bbbbbb;
+    margin-bottom: 50px;
+}
+
+/* =========================
+   GALLERY TABS – LASER BUTTONS
+========================= */
+
+.gallery-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 40px 0 60px;
+    z-index: 2;
+    position: relative;
+}
+
+.tab-btn {
+    padding: 14px 30px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(145deg, #0c0c0c, #141414);
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow:
+        0 0 12px rgba(255, 0, 0, 0.25),
+        inset 0 0 10px rgba(0, 255, 255, 0.15);
+    transition: all 0.35s ease;
+}
+
+.tab-btn:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 0 20px rgba(0, 255, 255, 0.6),
+        0 0 35px rgba(255, 0, 0, 0.4);
+}
+
+.tab-btn.active {
+    background: linear-gradient(145deg, #111, #1a1a1a);
+    box-shadow:
+        0 0 30px rgba(0, 255, 255, 0.9),
+        0 0 45px rgba(255, 0, 0, 0.6);
+}
+
+/* =========================
+   GALLERY DISPLAY
+========================= */
+
+/* =========================
+   GALLERY DISPLAY (MODERN MASONRY)
+   ========================= */
+
+/* =========================
+   FUTURISTIC CARD DESIGN
+   ========================= */
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.gallery-grid {
+    column-count: 3;
+    column-gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+@media (max-width: 900px) {
+    .gallery-grid {
+        column-count: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-grid {
+        column-count: 1;
+    }
+}
+
+.gallery-item {
+    break-inside: avoid;
+    margin-bottom: 30px;
+    position: relative;
+    border-radius: 20px;
+    padding: 6px;
+    /* Space for the border */
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+    transform: translateZ(0);
+    /* Fix for flicker */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Animated Border Background */
+.gallery-item::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg,
+            transparent 0deg,
+            transparent 90deg,
+            rgba(0, 210, 255, 0.5) 180deg,
+            /* Cyan */
+            transparent 270deg,
+            rgba(255, 215, 0, 0.5) 360deg
+            /* Gold */
+        );
+    animation: borderRotate 4s linear infinite;
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.gallery-item:hover::before {
+    opacity: 1;
+}
+
+@keyframes borderRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Inner Card Background */
+.gallery-item::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    /* Thickness of the border visible */
+    background: #0f0f0f;
+    border-radius: 17px;
+    z-index: -1;
+}
+
+.gallery-item img {
+    width: 100%;
+    display: block;
+    border-radius: 14px;
+    /* Slightly less than container */
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hover Effects */
+.gallery-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        0 0 25px rgba(0, 210, 255, 0.15);
+    /* Cyan Glow */
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Overlay - Adjusted for inner padding */
+.overlay {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    /* Match inner content area */
+    border-radius: 17px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2) 60%, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 25px;
+    pointer-events: none;
+    /* Let clicks pass to item */
+    z-index: 10;
+}
+
+.gallery-item:hover .overlay {
+    opacity: 1;
+}
+
+.zoom-icon {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    transform: translateY(20px) scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+.gallery-item:hover .zoom-icon {
+    transform: translateY(0) scale(1);
+}
+
+.overlay p {
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transform: translateY(15px);
+    transition: transform 0.4s ease 0.1s;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.gallery-item:hover .overlay p {
+    transform: translateY(0);
+}
+
+/* =========================
+   FULLSCREEN IMAGE MODAL
+========================= */
+
+.image-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.94);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.image-modal img {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 18px;
+    box-shadow:
+        0 0 40px rgba(0, 255, 255, 0.7),
+        0 0 70px rgba(255, 0, 0, 0.4);
+    animation: zoomIn 0.4s ease;
+}
+
+.close-modal {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 42px;
+    color: #ffffff;
+    cursor: pointer;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.8);
+}
+
+/* NAV ARROWS */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 15px;
+    z-index: 10000;
+    text-shadow:
+        0 0 18px rgba(255, 0, 0, 0.8),
+        0 0 25px rgba(0, 255, 255, 0.8);
+}
+
+.nav-arrow.left {
+    left: 30px;
+}
+
+.nav-arrow.right {
+    right: 30px;
+}
+
+/* CAPTION */
+#modalCaption {
+    margin-top: 18px;
+    font-size: 18px;
+    color: #ffffff;
+    text-align: center;
+    text-shadow:
+        0 0 12px rgba(0, 255, 255, 0.7);
+}
+
+/* FOOTER */
+.footer {
+    background: #050505;
+    color: #aaa;
+    padding: 50px;
+}
+
+.footer-bottom {
+    text-align: center;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* =========================
+   SUBTLE SCAN-LINE OVERLAY
+========================= */
+
+.about::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+
+    background: repeating-linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.04) 0px,
+            rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px,
+            transparent 4px);
+
+    animation: scanMove 12s linear infinite;
+    mix-blend-mode: overlay;
+}
+
+/* SLOW SCAN MOTION */
+@keyframes scanMove {
+    from {
+        background-position-y: 0;
+    }
+
+    to {
+        background-position-y: 100%;
+    }
+}
+
+.footer-logo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.footer-logo img {
+    height: 50px;
+    margin-bottom: 10px;
+    opacity: 0.85;
+}
+
+
+/* Slideshow Progress Bar */
+.slideshow-progress {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #c9a24d, #ffd700);
+    box-shadow: 0 0 10px #ffd700;
+}

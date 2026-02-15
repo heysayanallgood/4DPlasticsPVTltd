@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Checkout - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="premium-bg-animated"></div>
+    <div class="gold-dust">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div
+        style="min-height:100vh; padding:80px 20px; max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1.5fr 1fr; gap:40px; align-items:start;">
+
+        <!-- LEFT COLUMN: PAYMENT METHODS -->
+        <div class="premium-box" style="text-align:left; padding:30px;">
+            <h2 class="text-premium-heading" style="font-size:1.8rem; margin-bottom:25px;">Select Payment Method</h2>
+
+            <div class="payment-methods-container">
+                <!-- SIDEBAR -->
+                <div class="payment-sidebar">
+                    <div class="payment-option-btn active" onclick="showPayment('upi', this)">
+                        📱 UPI
+                        <small style="color:#777; margin-left:auto;">GPay, PhonePe</small>
+                    </div>
+                    <div class="payment-option-btn" onclick="showPayment('card', this)">
+                        💳 Credit / Debit Card
+                    </div>
+                    <div class="payment-option-btn" onclick="showPayment('netbanking', this)">
+                        🏦 Net Banking
+                    </div>
+                    <div class="payment-option-btn" onclick="showPayment('wallet', this)">
+                        👛 Wallets
+                    </div>
+                    <div class="payment-option-btn" onclick="showPayment('cod', this)">
+                        💵 Cash on Delivery
+                    </div>
+                </div>
+
+                <!-- CONTENT PANEL -->
+                <div class="payment-details-panel">
+
+                    <!-- UPI SECTION -->
+                    <div id="payment-upi" class="payment-content-section active">
+                        <h4 style="color:#fff; margin-bottom:15px;">Choose UPI App</h4>
+                        <div class="upi-grid">
+                            <div class="upi-option" onclick="selectUpi('gpay', this)">
+                                <span style="font-size:24px;">🔵</span> Google Pay
+                            </div>
+                            <div class="upi-option" onclick="selectUpi('phonepe', this)">
+                                <span style="font-size:24px;">🟣</span> PhonePe
+                            </div>
+                            <div class="upi-option" onclick="selectUpi('paytm', this)">
+                                <span style="font-size:24px;">🔷</span> Paytm
+                            </div>
+                            <div class="upi-option" onclick="selectUpi('amazon', this)">
+                                <span style="font-size:24px;">🟡</span> Amazon Pay
+                            </div>
+                        </div>
+
+                        <div id="upi-input-area" style="margin-top:20px; display:none;">
+                            <label style="color:#ccc; font-size:0.9rem;">Enter UPI ID</label>
+                            <input type="text" class="premium-input" placeholder="e.g. mobile@upi"
+                                style="margin-top:8px;">
+                            <button class="checkout-btn-main" onclick="processPayment()" style="margin-top:15px;">Pay
+                                Now</button>
+                        </div>
+                    </div>
+
+                    <!-- CARD SECTION -->
+                    <div id="payment-card" class="payment-content-section">
+                        <h4 style="color:#fff; margin-bottom:15px;">Enter Card Details</h4>
+                        <form onsubmit="event.preventDefault(); processPayment();">
+                            <div class="premium-input-group">
+                                <label>Card Number</label>
+                                <input type="text" class="premium-input" placeholder="0000 0000 0000 0000"
+                                    maxlength="19" required>
+                            </div>
+                            <div style="display:flex; gap:15px;">
+                                <div class="premium-input-group" style="flex:1;">
+                                    <label>Expiry</label>
+                                    <input type="text" class="premium-input" placeholder="MM/YY" maxlength="5" required>
+                                </div>
+                                <div class="premium-input-group" style="flex:1;">
+                                    <label>CVV</label>
+                                    <input type="password" class="premium-input" placeholder="123" maxlength="3"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="premium-input-group">
+                                <label>Cardholder Name</label>
+                                <input type="text" class="premium-input" placeholder="Name on Card" required>
+                            </div>
+                            <button type="submit" class="checkout-btn-main">Pay Securely</button>
+                        </form>
+                    </div>
+
+                    <!-- NET BANKING SECTION -->
+                    <div id="payment-netbanking" class="payment-content-section">
+                        <h4 style="color:#fff; margin-bottom:15px;">Select Bank</h4>
+                        <select class="bank-select" onchange="enablePayBtn(this)">
+                            <option value="">-- Choose Bank --</option>
+                            <option value="hdfc">HDFC Bank</option>
+                            <option value="sbi">State Bank of India</option>
+                            <option value="icici">ICICI Bank</option>
+                            <option value="axis">Axis Bank</option>
+                            <option value="kotak">Kotak Mahindra Bank</option>
+                        </select>
+                        <button class="checkout-btn-main" id="nb-pay-btn" onclick="processPayment()" disabled
+                            style="opacity:0.5; margin-top:20px;">Proceed to Pay</button>
+                    </div>
+
+                    <!-- WALLET SECTION -->
+                    <div id="payment-wallet" class="payment-content-section">
+                        <h4 style="color:#fff; margin-bottom:15px;">Select Wallet</h4>
+                        <div class="upi-grid">
+                            <div class="upi-option" onclick="selectWallet(this)">Airtel Money</div>
+                            <div class="upi-option" onclick="selectWallet(this)">JioMoney</div>
+                            <div class="upi-option" onclick="selectWallet(this)">Freecharge</div>
+                            <div class="upi-option" onclick="selectWallet(this)">MobiKwik</div>
+                        </div>
+                        <button class="checkout-btn-main" id="wallet-pay-btn" onclick="processPayment()" disabled
+                            style="opacity:0.5; margin-top:20px;">Pay via Wallet</button>
+                    </div>
+
+                    <!-- COD SECTION -->
+                    <div id="payment-cod" class="payment-content-section">
+                        <h4 style="color:#fff; margin-bottom:15px;">Cash on Delivery</h4>
+                        <p style="color:#ccc; font-size:0.95rem; line-height:1.6;">
+                            Pay safely with cash when your order is delivered to your doorstep.
+                            <br><br>
+                            <small>Note: Additional verification may be required.</small>
+                        </p>
+                        <button class="checkout-btn-main" onclick="processPayment()" style="margin-top:20px;">Confirm
+                            Order</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: ORDER SUMMARY -->
+        <div class="premium-box" style="text-align:left; padding:30px; position:sticky; top:100px;">
+            <h3
+                style="color:#fff; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:15px; margin-bottom:20px;">
+                Order Summary</h3>
+
+            <div id="order-items-list" style="max-height:300px; overflow-y:auto; margin-bottom:20px;">
+                <!-- Items Injected Here -->
+            </div>
+
+            <div class="order-row">
+                <span>Subtotal</span>
+                <span id="summary-subtotal">₹0</span>
+            </div>
+            <div class="order-row">
+                <span>Tax (5%)</span>
+                <span id="summary-tax">₹0</span>
+            </div>
+            <div class="order-row total">
+                <span>Total Amount</span>
+                <span id="summary-total" style="color:#ffd700;">₹0</span>
+            </div>
+
+            <div style="margin-top:30px; text-align:center;">
+                <p style="color:#777; font-size:0.8rem;">Secure Encrypted Transaction 🔒</p>
+            </div>
+
+            <button onclick="window.location.href='cart.html'"
+                style="background:none; border:none; color:#bbb; width:100%; margin-top:15px; cursor:pointer; text-decoration:underline;">
+                Edit Cart
+            </button>
+        </div>
+
+    </div>
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer reveal" id="contact">
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Registered Office</h3>
+                <p>
+                    20/C, Surath Banerjee Lane,<br>
+                    Konnagar, Hooghly,<br>
+                    Serampore Uttarpara,<br>
+                    West Bengal – 712235
+                </p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919432249082" class="contact-link">+91 9432249082</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">
+                        suparnasubhashis@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Init Order Summary
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const itemsList = document.getElementById("order-items-list");
+
+        if (cart.length === 0) {
+            window.location.href = 'products.html'; // Redirect if empty
+        }
+
+        let subtotal = 0;
+        itemsList.innerHTML = "";
+
+        cart.forEach(item => {
+            const itemTotal = item.price * item.qty;
+            subtotal += itemTotal;
+
+            const div = document.createElement("div");
+            div.className = "order-row";
+            div.innerHTML = `
+                <span>${item.name} <span style="color:#777; margin-left:5px;">x${item.qty}</span></span>
+                <span>₹${itemTotal}</span>
+            `;
+            itemsList.appendChild(div);
+        });
+
+        const tax = Math.round(subtotal * 0.05);
+        const total = subtotal + tax;
+
+        document.getElementById("summary-subtotal").textContent = "₹" + subtotal;
+        document.getElementById("summary-tax").textContent = "₹" + tax;
+        document.getElementById("summary-total").textContent = "₹" + total;
+
+        // UI Functions
+        function showPayment(method, btn) {
+            // Sidebar active state
+            document.querySelectorAll(".payment-option-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            // Content show/hide
+            document.querySelectorAll(".payment-content-section").forEach(sec => sec.classList.remove("active"));
+            document.getElementById("payment-" + method).classList.add("active");
+        }
+
+        function selectUpi(app, el) {
+            document.querySelectorAll(".upi-option").forEach(opt => opt.classList.remove("selected"));
+            el.classList.add("selected");
+            document.getElementById("upi-input-area").style.display = "block";
+        }
+
+        function selectWallet(el) {
+            document.querySelectorAll(".upi-option").forEach(opt => opt.classList.remove("selected"));
+            el.classList.add("selected");
+            document.getElementById("wallet-pay-btn").disabled = false;
+            document.getElementById("wallet-pay-btn").style.opacity = "1";
+        }
+
+        function enablePayBtn(select) {
+            const btn = document.getElementById("nb-pay-btn");
+            if (select.value) {
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = "0.5";
+            }
+        }
+
+        function processPayment() {
+            // Show processing...
+            const activeBtn = document.querySelector(".payment-content-section.active .checkout-btn-main");
+            if (activeBtn) {
+                activeBtn.textContent = "Processing...";
+                activeBtn.disabled = true;
+            }
+
+            setTimeout(() => {
+                localStorage.removeItem("cart");
+                window.location.href = "success.html";
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>

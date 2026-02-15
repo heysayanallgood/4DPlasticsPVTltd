@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Reviews - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="reviews.css">
+</head>
+
+<body>
+
+    <!-- 🔹 NAVBAR -->
+    <header class="navbar">
+        <div class="logo reveal">4D Plastics</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li class="cart-nav">
+                    <a href="cart.html">🛒</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 🔹 REVIEWS HEADER -->
+    <section class="about" style="padding-top:120px; padding-bottom:40px; min-height:auto;">
+        <div class="premium-bg-animated"></div>
+        <h2 class="text-premium-heading" style="margin-bottom:10px;">Customer Reviews</h2>
+        <p class="about-subtitle" style="color:#ccc;">
+            See what others are saying about <br>
+            <span id="page-product-title" style="color:white; font-weight:bold; font-size:1.4rem;">...</span>
+        </p>
+    </section>
+
+    <!-- 🔹 REVIEWS CONTENT GRID -->
+    <div class="reviews-page-layout">
+
+        <!-- LEFT: BREAKDOWN -->
+        <aside>
+            <div class="rating-breakdown-card reveal">
+                <div style="display:flex; align-items:flex-end; gap:15px; margin-bottom:20px;">
+                    <div id="avg-rating-display" class="rating-big">0.0</div>
+                    <div style="text-align:left; padding-bottom:8px;">
+                        <div id="big-stars-display" class="stars-outer" style="font-size:20px;">★★★★★</div>
+                        <div id="total-reviews-display" style="color:#aaa; font-size:0.9rem;">0 Reviews</div>
+                    </div>
+                </div>
+
+                <!-- BARS -->
+                <div class="rating-bars">
+                    <div class="rating-bar-row">
+                        <span style="width:30px;">5 ★</span>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="bar-5"></div>
+                        </div>
+                        <span id="bar-text-5" style="width:40px; text-align:right;">0%</span>
+                    </div>
+                    <div class="rating-bar-row">
+                        <span style="width:30px;">4 ★</span>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="bar-4"></div>
+                        </div>
+                        <span id="bar-text-4" style="width:40px; text-align:right;">0%</span>
+                    </div>
+                    <div class="rating-bar-row">
+                        <span style="width:30px;">3 ★</span>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="bar-3"></div>
+                        </div>
+                        <span id="bar-text-3" style="width:40px; text-align:right;">0%</span>
+                    </div>
+                    <div class="rating-bar-row">
+                        <span style="width:30px;">2 ★</span>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="bar-2"></div>
+                        </div>
+                        <span id="bar-text-2" style="width:40px; text-align:right;">0%</span>
+                    </div>
+                    <div class="rating-bar-row">
+                        <span style="width:30px;">1 ★</span>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="bar-1"></div>
+                        </div>
+                        <span id="bar-text-1" style="width:40px; text-align:right;">0%</span>
+                    </div>
+                </div>
+
+                <div style="margin-top:30px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+                    <h4 style="color:white; margin-bottom:15px;">Filters</h4>
+                    <label style="display:flex; gap:10px; color:#ccc; margin-bottom:8px; cursor:pointer;">
+                        <input type="checkbox"> Verified Purchase
+                    </label>
+                    <label style="display:flex; gap:10px; color:#ccc; margin-bottom:8px; cursor:pointer;">
+                        <input type="checkbox"> With Images
+                    </label>
+                    <label style="display:flex; gap:10px; color:#ccc; cursor:pointer;">
+                        <input type="checkbox"> With Video
+                    </label>
+                </div>
+
+                <button class="checkout-btn-main" style="width:100%; margin-top:30px;"
+                    onclick="ReviewSystem.openModal(new URLSearchParams(window.location.search).get('product'))">
+                    Write a Review
+                </button>
+            </div>
+        </aside>
+
+        <!-- RIGHT: LIST -->
+        <main>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="color:white; font-size:1.4rem;">Top Reviews</h3>
+                <select
+                    style="background:rgba(255,255,255,0.05); color:white; border:1px solid #333; padding:8px 15px; border-radius:8px;">
+                    <option>Most Recent</option>
+                    <option>Highest Rated</option>
+                    <option>Lowest Rated</option>
+                    <option>Most Helpful</option>
+                </select>
+            </div>
+
+            <div id="reviews-list-container">
+                <!-- Injected via JS -->
+            </div>
+        </main>
+
+    </div>
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer reveal" id="contact">
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Registered Office</h3>
+                <p>
+                    20/C, Surath Banerjee Lane,<br>
+                    Konnagar, Hooghly,<br>
+                    Serampore Uttarpara,<br>
+                    West Bengal – 712235
+                </p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919432249082" class="contact-link">+91 9432249082</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">
+                        suparnasubhashis@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- 📝 WRITE REVIEW MODAL (Copy for Reusability) -->
+    <div class="review-modal-overlay">
+        <div class="review-modal">
+            <div class="modal-header">
+                <h2>Write a Review</h2>
+                <button class="close-modal-btn" onclick="ReviewSystem.closeModal()">×</button>
+            </div>
+            <p style="color:#aaa; margin-bottom:20px;">Product: <span id="modal-product-name"
+                    style="color:white; font-weight:bold;"></span></p>
+
+            <form id="review-form" onsubmit="ReviewSystem.submitReview(event)">
+                <div class="review-form-group">
+                    <label>Overall Rating</label>
+                    <div class="star-rating-input">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                    </div>
+                </div>
+                <div class="review-form-group">
+                    <label>Review Title</label>
+                    <input type="text" name="title" class="review-input" placeholder="e.g. Great Quality!" required>
+                </div>
+                <div class="review-form-group">
+                    <label>Your Review</label>
+                    <textarea name="text" class="review-textarea" placeholder="Tell us what you liked or disliked..."
+                        required></textarea>
+                </div>
+                <div style="display:flex; gap:15px;">
+                    <div class="review-form-group" style="flex:1;">
+                        <label>Pros</label>
+                        <input type="text" name="pros" class="review-input">
+                    </div>
+                    <div class="review-form-group" style="flex:1;">
+                        <label>Cons</label>
+                        <input type="text" name="cons" class="review-input">
+                    </div>
+                </div>
+                <div class="review-form-group">
+                    <label>Add Photos/Video</label>
+                    <div class="file-upload-box" onclick="document.getElementById('media-upload').click()">
+                        <p style="color:#aaa;">Click to Upload</p>
+                        <input type="file" id="media-upload" accept="image/*,video/*" multiple style="display:none;"
+                            onchange="ReviewSystem.handleUpload(this)">
+                    </div>
+                    <div id="preview-area" class="preview-container"></div>
+                </div>
+                <div class="review-form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="author" class="review-input" required>
+                </div>
+                <div class="review-form-group" style="display:flex; align-items:center; gap:10px;">
+                    <input type="checkbox" id="recommended" name="recommended" checked style="width:20px; height:20px;">
+                    <label for="recommended" style="margin:0; cursor:pointer;">I recommend this product</label>
+                </div>
+                <button type="submit" class="checkout-btn-main" style="width:100%; margin-top:10px;">Submit
+                    Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="review-system.js"></script>
+    <script>
+        // Init logic specifically for this page (handled by review-system.js already, but setting product context if needed)
+        // ReviewSystem.init() handles page detection.
+    </script>
+</body>
+
+</html>

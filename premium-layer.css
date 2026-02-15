@@ -1,0 +1,195 @@
+/* 
+   PREMIUM UI LAYER - 4D PLASTICS 
+   Industrial Design | Precision Engineering Theme
+   Applies high-fidelity surfaces and lighting on top of existing structure.
+*/
+
+:root {
+    --premium-dark: #050008;
+    --premium-panel: rgba(255, 255, 255, 0.03);
+    --premium-border: rgba(255, 255, 255, 0.08);
+    --industrial-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+    --highlight-glow: rgba(255, 255, 255, 0.05);
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --ease-mechanical: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* --- OPTICAL CORRECTIONS --- */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    background-color: var(--premium-dark);
+    /* Noise texture overlays can be added via pseudo-elements if needed, 
+       but keeping clean for now as per "clean" directive */
+}
+
+/* --- TYPOGRAPHY ENGINE --- */
+h1,
+h2,
+h3,
+h4,
+.logo {
+    letter-spacing: -0.03em;
+    /* Tight engineered feel */
+    font-weight: 600;
+}
+
+p,
+li,
+a,
+button {
+    letter-spacing: 0.01em;
+    /* Readability */
+    font-weight: 400;
+}
+
+/* --- SURFACE & LIGHTING LAYER --- */
+
+/* Navbar: Technical Glass */
+.navbar {
+    background: rgba(5, 0, 8, 0.85) !important;
+    /* Override for transparency */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--premium-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+    text-shadow: 0 0 15px rgba(255, 75, 75, 0.3);
+    /* Softer glow */
+}
+
+/* Cards: Floating Planes */
+.product-card,
+.review-card,
+.card {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+    border: 1px solid var(--premium-border);
+    box-shadow: var(--industrial-shadow);
+    transition: transform 0.4s var(--ease-mechanical),
+        box-shadow 0.4s var(--ease-mechanical),
+        border-color 0.4s ease;
+    border-radius: 12px;
+    /* Consistent rounding */
+}
+
+.product-card:hover,
+.review-card:hover,
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+}
+
+/* Interaction: Press Depth */
+.product-card:active,
+.review-card:active,
+.card:active {
+    transform: scale(0.98) translateY(-2px);
+    transition: transform 0.1s ease-out;
+}
+
+/* Buttons: Tactile Controls */
+button,
+.btn,
+.btn-add-cart,
+.btn-buy-now,
+.checkout-btn-main,
+.show-all-reviews {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s var(--ease-mechanical) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    /* Unified border */
+}
+
+/* Button Hover: Internal Light */
+button::after,
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+button:hover::after,
+.btn:hover::after {
+    opacity: 1;
+}
+
+button:active,
+.btn:active {
+    transform: scale(0.96);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Inputs: Recessed Surfaces */
+input,
+select,
+textarea {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid var(--premium-border) !important;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+    color: var(--text-primary) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(93, 173, 226, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.1), inset 0 2px 5px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+/* Footer: Matte Foundation */
+.footer {
+    background: linear-gradient(to top, #000000, #0a0505) !important;
+    border-top: 1px solid var(--premium-border) !important;
+}
+
+/* Scrollbar: Integrated */
+::-webkit-scrollbar {
+    width: 8px;
+    background: #050008;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+    border: 2px solid #050008;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* --- PERCEPTION DETAILS --- */
+
+/* Selection */
+::selection {
+    background: rgba(93, 173, 226, 0.3);
+    color: white;
+}
+
+/* Tooltips & Modals */
+.review-modal,
+.cart-modal {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+}

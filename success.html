@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Successful - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="about" style="position:fixed; inset:0; z-index:-1;">
+        <div class="premium-bg"></div>
+        <div class="gold-dust">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <div class="premium-container-center">
+        <div class="premium-box" style="padding:60px 40px;">
+            <div class="success-icon-wrapper">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 16.17l-3.88-3.88-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                </svg>
+            </div>
+
+            <h1 class="text-premium-heading" style="font-size:2.2rem; margin-bottom:10px;">Order Confirmed!</h1>
+            <p style="color:#ddd; margin-bottom:30px; font-size:1.1rem;">
+                Thank you for choosing 4D Plastics. Your order has been placed successfully.
+            </p>
+
+            <div class="order-summary-box" style="background:rgba(255,255,255,0.05); text-align:center;">
+                <p style="color:#888; margin-bottom:5px; font-size:0.9rem;">Order ID</p>
+                <h3 id="order-id" class="text-gradient-gold" style="font-size:1.8rem;">#Analyzing...</h3>
+            </div>
+
+            <button onclick="window.location.href='products.html'" class="checkout-btn-main"
+                style="background:linear-gradient(135deg, #c9a24d, #d4af37);">
+                Continue Shopping
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Generate Order ID
+        const orderId = "4DP-" + Math.floor(Math.random() * 900000 + 100000);
+        document.getElementById("order-id").textContent = orderId;
+
+        // Clear any lingering cart data if accessed directly without checkout
+        localStorage.removeItem("cart");
+    </script>
+
+</body>
+
+</html>

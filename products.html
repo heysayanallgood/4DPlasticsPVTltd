@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Products - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="reviews.css">
+</head>
+
+<body>
+
+    <!-- 🔮 PRELOADER -->
+    <div id="preloader">
+        <div class="loader-text">Loading 4D Plastics...</div>
+        <div class="loader-ring"></div>
+    </div>
+
+    <!-- 🔹 NAVBAR -->
+    <header class="navbar">
+        <div class="logo reveal">4D Plastics</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="virtual-tour.html">Virtual Tour</a></li>
+
+                <!-- Link to new Cart Page -->
+                <li class="cart-nav">
+                    <a href="cart.html" style="display: flex; align-items: center; gap: 5px;">
+                        🛒 <span id="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 🔹 PRODUCTS SECTION -->
+    <section class="about" style="min-height:100vh; padding-top:120px; position:relative;">
+        <div class="premium-bg-animated"></div>
+        <div class="gold-dust">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <h2 style="position: relative; z-index: 2;" class="text-premium-heading">Our Premium Collection</h2>
+        <p class="about-subtitle" style="position: relative; z-index: 2; color:#ccc;">
+            Discover high-quality plastic solutions for your needs.
+        </p>
+
+        <!-- SEARCH / FILTER -->
+        <div class="product-controls" style="position: relative; z-index: 2;">
+            <input type="text" id="searchInput" placeholder="Search products...">
+
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="containers">Containers</option>
+                <option value="packaging">Packaging</option>
+                <option value="custom">Custom</option>
+            </select>
+
+            <select id="sortPrice">
+                <option value="default">Sort by Price</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+            </select>
+        </div>
+
+        <!-- NEW PREMIUM GRID -->
+        <div class="product-grid" id="productGrid" style="position: relative; z-index: 2;">
+
+            <!-- Product 1 -->
+            <div class="product-card product" data-name="3 KG Plastic Container" data-price="100" data-cat="containers">
+                <div class="product-image-placeholder">📦</div>
+                <h3>3 KG Plastic Container</h3>
+                <p class="product-desc">
+                    Suitable for storage of biscuits, bakery products,
+                    cakes, toffees, toast biscuits, and sweet bread.
+                </p>
+                <div class="product-details">
+                    <p><strong>Capacity:</strong> 3 Kilograms</p>
+                    <p><strong>Material:</strong> Food-grade plastic</p>
+                </div>
+                <span class="product-price">₹100</span>
+                <div class="product-actions">
+                    <button class="btn-add-cart">Add to Cart</button>
+                    <button class="btn-buy-now">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card product" data-name="5 KG Plastic Container" data-price="300" data-cat="containers">
+                <div class="product-image-placeholder">📦</div>
+                <h3>5 KG Plastic Container</h3>
+                <p class="product-desc">
+                    Ideal for medium-scale storage of biscuits,
+                    bakery items, cakes, and sweet products.
+                </p>
+                <div class="product-details">
+                    <p><strong>Capacity:</strong> 5 Kilograms</p>
+                    <p><strong>Material:</strong> Food-grade plastic</p>
+                </div>
+                <span class="product-price">₹300</span>
+                <div class="product-actions">
+                    <button class="btn-add-cart">Add to Cart</button>
+                    <button class="btn-buy-now">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card product" data-name="6 KG Plastic Container" data-price="500" data-cat="containers">
+                <div class="product-image-placeholder">📦</div>
+                <h3>6 KG Plastic Container</h3>
+                <p class="product-desc">
+                    Best suited for bulk storage in bakeries,
+                    confectioneries, and food processing units.
+                </p>
+                <div class="product-details">
+                    <p><strong>Capacity:</strong> 6 Kilograms</p>
+                    <p><strong>Material:</strong> Food-grade plastic</p>
+                </div>
+                <span class="product-price">₹500</span>
+                <div class="product-actions">
+                    <button class="btn-add-cart">Add to Cart</button>
+                    <button class="btn-buy-now">Buy Now</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer reveal" id="contact">
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Registered Office</h3>
+                <p>
+                    20/C, Surath Banerjee Lane,<br>
+                    Konnagar, Hooghly,<br>
+                    Serampore Uttarpara,<br>
+                    West Bengal – 712235
+                </p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919432249082" class="contact-link">+91 9432249082</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">
+                        suparnasubhashis@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- 🔹 BACK TO TOP BUTTON -->
+    <button id="backToTop">↑</button>
+
+    <!-- SCRIPTS -->
+    <script src="preloader.js"></script>
+    <script>
+        // Back to Top Logic
+        const backToTopBtn = document.getElementById("backToTop");
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.opacity = "1";
+                backToTopBtn.style.pointerEvents = "auto";
+            } else {
+                backToTopBtn.style.opacity = "0";
+                backToTopBtn.style.pointerEvents = "none";
+            }
+        });
+        backToTopBtn.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        // Reveal Animation
+        const revealElements = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+
+    <script>
+        /* =========================
+           CART LOGIC (LocalStorage)
+        ========================= */
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            document.getElementById("cart-count").textContent = count;
+        }
+
+        function addToCart(name, price, redirect = false) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existingItem = cart.find(item => item.name === name);
+
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartCount();
+
+            if (redirect) {
+                window.location.href = "cart.html";
+            } else {
+                // Show simple feedback
+                alert(`✅ ${name} added to cart!`);
+            }
+        }
+
+        // Initialize Loop
+        document.querySelectorAll(".product").forEach(card => {
+            const name = card.dataset.name;
+            const price = parseInt(card.dataset.price);
+
+            // Add to Cart Button
+            card.querySelector(".btn-add-cart").addEventListener("click", () => {
+                addToCart(name, price, false);
+            });
+
+            // Buy Now Button
+            card.querySelector(".btn-buy-now").addEventListener("click", () => {
+                addToCart(name, price, true);
+            });
+        });
+
+        // Init Count on Load
+        updateCartCount();
+    </script>
+
+    <!-- 📝 WRITE REVIEW MODAL -->
+    <div class="review-modal-overlay">
+        <div class="review-modal">
+            <div class="modal-header">
+                <h2>Write a Review</h2>
+                <button class="close-modal-btn" onclick="ReviewSystem.closeModal()">×</button>
+            </div>
+            <p style="color:#aaa; margin-bottom:20px;">Product: <span id="modal-product-name"
+                    style="color:white; font-weight:bold;"></span></p>
+
+            <form id="review-form" onsubmit="ReviewSystem.submitReview(event)">
+
+                <!-- STARS -->
+                <div class="review-form-group">
+                    <label>Overall Rating</label>
+                    <div class="star-rating-input">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                    </div>
+                </div>
+
+                <!-- TITLE -->
+                <div class="review-form-group">
+                    <label>Review Title</label>
+                    <input type="text" name="title" class="review-input" placeholder="e.g. Great Quality!" required>
+                </div>
+
+                <!-- DETAILS -->
+                <div class="review-form-group">
+                    <label>Your Review</label>
+                    <textarea name="text" class="review-textarea" placeholder="Tell us what you liked or disliked..."
+                        required></textarea>
+                </div>
+
+                <!-- PROS / CONS -->
+                <div style="display:flex; gap:15px;">
+                    <div class="review-form-group" style="flex:1;">
+                        <label>Pros</label>
+                        <input type="text" name="pros" class="review-input" placeholder="e.g. Durable">
+                    </div>
+                    <div class="review-form-group" style="flex:1;">
+                        <label>Cons</label>
+                        <input type="text" name="cons" class="review-input" placeholder="e.g. None">
+                    </div>
+                </div>
+
+                <!-- MEDIA -->
+                <div class="review-form-group">
+                    <label>Add Photos/Video</label>
+                    <div class="file-upload-box" onclick="document.getElementById('media-upload').click()">
+                        <p style="color:#aaa;">Click to Upload</p>
+                        <input type="file" id="media-upload" accept="image/*,video/*" multiple style="display:none;"
+                            onchange="ReviewSystem.handleUpload(this)">
+                    </div>
+                    <div id="preview-area" class="preview-container"></div>
+                </div>
+
+                <!-- NAME & RECOMMEND -->
+                <div class="review-form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="author" class="review-input" required>
+                </div>
+
+                <div class="review-form-group" style="display:flex; align-items:center; gap:10px;">
+                    <input type="checkbox" id="recommended" name="recommended" checked style="width:20px; height:20px;">
+                    <label for="recommended" style="margin:0; cursor:pointer;">I recommend this product</label>
+                </div>
+
+                <button type="submit" class="checkout-btn-main" style="width:100%; margin-top:10px;">Submit
+                    Review</button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- 🔧 SEARCH & FILTER SCRIPT -->
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const sortPrice = document.getElementById("sortPrice");
+        const productGrid = document.getElementById("productGrid");
+
+        // Get fresh list of products
+        let products = Array.from(document.querySelectorAll(".product"));
+
+        function filterAndSortProducts() {
+            const searchText = searchInput.value.toLowerCase();
+            const sortValue = sortPrice.value;
+
+            // FILTER BY SEARCH ONLY (can extend to Category if needed)
+            let filteredProducts = products.filter(product => {
+                const name = product.dataset.name.toLowerCase();
+                return name.includes(searchText);
+            });
+
+            // SORT BY PRICE
+            if (sortValue === "low") {
+                filteredProducts.sort((a, b) =>
+                    Number(a.dataset.price) - Number(b.dataset.price)
+                );
+            } else if (sortValue === "high") {
+                filteredProducts.sort((a, b) =>
+                    Number(b.dataset.price) - Number(a.dataset.price)
+                );
+            }
+
+            // CLEAR & RE-APPEND
+            productGrid.innerHTML = "";
+            filteredProducts.forEach(product => productGrid.appendChild(product));
+
+            // Re-init stars after sort/filter render
+            if (window.ReviewSystem) ReviewSystem.renderProductCardsStars();
+        }
+
+        searchInput.addEventListener("input", filterAndSortProducts);
+        sortPrice.addEventListener("change", filterAndSortProducts);
+    </script>
+
+    <!-- REVIEW SYSTEM JS -->
+    <script src="review-system.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,302 @@
+/* 
+   4D PLASTICS - INDUSTRIAL DESIGN SYSTEM
+   Theme: "Engineered Precision"
+   Level: Enterprise Manufacturing (Bosch/Siemens/Tesla)
+   
+   This file overrides default styles to enforce a strict grid, 
+   matte surfaces, and distinct hierarchy.
+*/
+
+:root {
+    /* --- SPACING SYSTEM (8pt Grid) --- */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+    --space-section: 96px;
+
+    /* --- COLORS: INDUSTRIAL MATTE --- */
+    --surface-base: #0a0a0a;
+    /* Deep matte black */
+    --surface-panel: #111111;
+    /* Slightly lighter panel */
+    --surface-card: #161616;
+    /* Card surface */
+    --surface-elevated: #1a1a1a;
+    /* Popover/Hover */
+
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-highlight: rgba(255, 255, 255, 0.15);
+    /* Top edge lighting */
+
+    --text-primary: #f0f0f0;
+    /* High legibility white */
+    --text-secondary: #a0a0a0;
+    /* Technical grey */
+    --text-tertiary: #606060;
+    /* Disabled/Watermark */
+
+    --accent-red: #e74c3c;
+    /* Industrial Safety Red */
+    --accent-blue: #3498db;
+    /* Engineering Blue */
+    --accent-gold: #f1c40f;
+    /* Warning/Star */
+
+    /* --- DEPTH (Elevation) --- */
+    --elevation-1: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.4);
+    --elevation-3: 0 12px 24px -4px rgba(0, 0, 0, 0.5);
+    --elevation-4: 0 24px 48px -12px rgba(0, 0, 0, 0.6);
+
+    /* --- TYPOGRAPHY --- */
+    --font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+    /* Fallback to system if Inter not loaded */
+}
+
+/* =========================================
+   1. GLOBAL RESET & BASE
+========================================= */
+body {
+    background-color: var(--surface-base) !important;
+    color: var(--text-primary) !important;
+    line-height: 1.6;
+    background-image:
+        radial-gradient(circle at 50% 0%, #1a1a1a 0%, transparent 40%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px, 40px 40px;
+    /* Subtle grid */
+    background-attachment: fixed;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+}
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.01em;
+}
+
+/* =========================================
+   2. NAVBAR: CONTROL PANEL
+========================================= */
+.navbar {
+    height: 80px !important;
+    background: rgba(10, 10, 10, 0.95) !important;
+    border-bottom: 1px solid var(--border-subtle);
+    backdrop-filter: blur(12px);
+    padding: 0 var(--space-2xl) !important;
+}
+
+.logo {
+    font-size: 20px !important;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-primary) !important;
+    text-shadow: none !important;
+    /* Remove neon glow */
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo::before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-red);
+    border-radius: 2px;
+}
+
+.nav-links {
+    gap: var(--space-xl) !important;
+}
+
+.nav-links a {
+    font-size: 14px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    color: var(--text-secondary) !important;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--text-primary) !important;
+}
+
+/* =========================================
+   3. HERO: TECHNICAL INTRO
+========================================= */
+.hero {
+    background: radial-gradient(circle at 60% 50%, #1a1a1a 0%, #0a0a0a 70%) !important;
+}
+
+.hero-content h1 {
+    font-size: 56px !important;
+    text-shadow: none !important;
+    line-height: 1.1;
+    margin-bottom: var(--space-lg);
+}
+
+.hero-content p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto var(--space-xl);
+}
+
+/* Kill flash animations */
+.background span,
+.wave-divider {
+    display: none !important;
+    /* Removing decorative bloat */
+}
+
+/* =========================================
+   4. CARDS: MANUFACTURED OBJECTS
+========================================= */
+.card,
+.product-card,
+.review-card,
+.footer-box,
+.rating-breakdown-card,
+.product-review-preview {
+    background: var(--surface-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-top: 1px solid var(--border-highlight) !important;
+    /* Top light */
+    border-radius: 4px !important;
+    /* Technical rounded corners */
+    box-shadow: var(--elevation-2) !important;
+    padding: var(--space-lg) !important;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s !important;
+}
+
+.card:hover,
+.product-card:hover,
+.review-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--elevation-3) !important;
+    border-top-color: rgba(255, 255, 255, 0.3) !important;
+    background: var(--surface-elevated) !important;
+}
+
+/* Typography inside cards */
+.product-card h3,
+.review-card h3 {
+    font-size: 18px !important;
+    margin-bottom: var(--space-xs) !important;
+}
+
+.product-price {
+    font-family: 'Courier New', monospace;
+    /* Technical number feel */
+    color: var(--accent-blue) !important;
+    font-size: 16px !important;
+}
+
+/* =========================================
+   5. BUTTONS: PHYSICAL CONTROLS
+========================================= */
+.btn,
+button,
+.btn-buy-now,
+.checkout-btn-main {
+    border-radius: 2px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    font-size: 13px !important;
+    letter-spacing: 0.1em;
+    padding: 12px 24px !important;
+    border: none !important;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3) !important;
+    /* Physical depth */
+    transition: transform 0.1s, box-shadow 0.1s !important;
+    background: var(--accent-blue) !important;
+    color: white !important;
+}
+
+.btn:active,
+button:active,
+.btn-buy-now:active,
+.checkout-btn-main:active {
+    transform: translateY(4px) !important;
+    box-shadow: none !important;
+}
+
+/* Secondary Button */
+.btn-add-cart,
+.show-all-reviews {
+    background: transparent !important;
+    border: 1px solid var(--border-subtle) !important;
+    box-shadow: none !important;
+    color: var(--text-secondary) !important;
+}
+
+.btn-add-cart:hover,
+.show-all-reviews:hover {
+    border-color: var(--text-primary) !important;
+    color: var(--text-primary) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* =========================================
+   6. INPUTS: CONSOLE STYLE
+========================================= */
+input,
+select,
+textarea {
+    background: #000 !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: 2px !important;
+    color: var(--text-primary) !important;
+    padding: 12px !important;
+    font-family: monospace !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2) !important;
+    outline: none;
+}
+
+/* =========================================
+   7. FOOTER: SYSTEM BASE
+========================================= */
+.footer {
+    background: var(--surface-base) !important;
+    border-top: 1px solid var(--border-subtle) !important;
+    padding-top: var(--space-3xl) !important;
+}
+
+.footer h3 {
+    font-size: 14px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary) !important;
+    margin-bottom: var(--space-lg) !important;
+}
+
+.footer p,
+.footer a {
+    font-size: 13px !important;
+    color: var(--text-secondary) !important;
+}
