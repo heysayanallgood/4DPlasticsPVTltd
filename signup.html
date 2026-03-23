@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+
+    <div class="premium-bg-animated auth-bg"></div>
+    <div class="gold-dust">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- 🔹 NAVBAR (Simplified for Auth Pages) -->
+    <header class="navbar auth-navbar">
+        <div class="logo reveal active" style="cursor:pointer;" onclick="window.location.href='index.html'">4D Plastics
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <div class="premium-box auth-card">
+            <h2 class="text-premium-heading" style="text-align: center; margin-bottom: 5px;">Create Account</h2>
+            <p style="text-align: center; color: #aaa; margin-bottom: 30px; font-size: 0.9rem;">Join 4D Plastics today
+            </p>
+
+            <div id="auth-error-msg" class="auth-error" style="display: none;"></div>
+
+            <form id="signup-form">
+                <div class="premium-input-group auth-input-wrapper">
+                    <label>Full Name</label>
+                    <input type="text" id="signup-name" class="premium-input" placeholder="e.g. John Doe" required
+                        autocomplete="name">
+                    <div class="input-glow"></div>
+                </div>
+
+                <div class="premium-input-group auth-input-wrapper">
+                    <label>Email Address</label>
+                    <input type="email" id="signup-email" class="premium-input" placeholder="Enter your email" required
+                        autocomplete="email">
+                    <div class="input-glow"></div>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <div class="premium-input-group auth-input-wrapper" style="flex: 1;">
+                        <label>Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="signup-password" class="premium-input" placeholder="Min. 6 chars"
+                                required autocomplete="new-password">
+                            <button type="button" class="pwd-toggle-btn"
+                                onclick="togglePassword('signup-password', this)">👁️</button>
+                        </div>
+                        <div class="input-glow"></div>
+                    </div>
+
+                    <div class="premium-input-group auth-input-wrapper" style="flex: 1;">
+                        <label>Confirm</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="signup-confirm" class="premium-input" placeholder="Re-enter"
+                                required autocomplete="new-password">
+                        </div>
+                        <div class="input-glow"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="checkout-btn-main auth-btn" id="signup-submit-btn"
+                    style="margin-top: 20px;">
+                    <span class="btn-text">Create Account</span>
+                    <div class="spinner" id="signup-spinner"></div>
+                </button>
+            </form>
+
+            <p style="text-align: center; margin-top: 25px; color: #ccc; font-size: 0.9rem;">
+                Already have an account? <a href="login.html" class="auth-link">Sign In</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Check if already logged in
+        checkAuth(false);
+
+        document.getElementById('signup-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+
+            const btn = document.getElementById('signup-submit-btn');
+            const spinner = document.getElementById('signup-spinner');
+            const btnText = btn.querySelector('.btn-text');
+            const errorMsg = document.getElementById('auth-error-msg');
+            const authCard = document.querySelector('.auth-card');
+
+            // Reset UI
+            errorMsg.style.display = 'none';
+
+            // Validation
+            if (password.length < 6) {
+                showError("Password must be at least 6 characters long.");
+                return;
+            }
+            if (password !== confirm) {
+                showError("Passwords do not match.");
+                return;
+            }
+
+            // Start Loading
+            btn.disabled = true;
+            btnText.style.opacity = '0';
+            spinner.style.display = 'block';
+
+            // Simulate network request
+            setTimeout(() => {
+                const result = registerUser(name, email, password);
+
+                if (result.success) {
+                    // Success animation
+                    btn.classList.add('success-btn');
+                    btnText.innerHTML = '✓ Account Created';
+                    btnText.style.opacity = '1';
+                    spinner.style.display = 'none';
+
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Redirect to home
+                    }, 1200);
+                } else {
+                    // Show error from backend
+                    btn.disabled = false;
+                    btnText.style.opacity = '1';
+                    spinner.style.display = 'none';
+                    showError(result.message);
+                }
+            }, 1500);
+
+            function showError(msg) {
+                errorMsg.textContent = msg;
+                errorMsg.style.display = 'block';
+                authCard.classList.add('shake-anim');
+                setTimeout(() => authCard.classList.remove('shake-anim'), 500);
+            }
+        });
+
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.innerHTML = '🙈';
+            } else {
+                input.type = 'password';
+                btn.innerHTML = '👁️';
+            }
+        }
+    </script>
+</body>
+
+</html>

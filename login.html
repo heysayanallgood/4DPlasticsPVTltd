@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+
+    <div class="premium-bg-animated auth-bg"></div>
+    <div class="gold-dust">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- 🔹 NAVBAR (Simplified for Auth Pages) -->
+    <header class="navbar auth-navbar">
+        <div class="logo reveal active" style="cursor:pointer;" onclick="window.location.href='index.html'">4D Plastics
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <div class="premium-box auth-card">
+            <h2 class="text-premium-heading" style="text-align: center; margin-bottom: 5px;">Welcome Back</h2>
+            <p style="text-align: center; color: #aaa; margin-bottom: 30px; font-size: 0.9rem;">Sign in to continue to
+                4D Plastics</p>
+
+            <div id="auth-error-msg" class="auth-error" style="display: none;"></div>
+
+            <form id="login-form">
+                <div class="premium-input-group auth-input-wrapper">
+                    <label>Email Address</label>
+                    <input type="email" id="login-email" class="premium-input" placeholder="Enter your email" required
+                        autocomplete="email">
+                    <div class="input-glow"></div>
+                </div>
+
+                <div class="premium-input-group auth-input-wrapper">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <label>Password</label>
+                        <a href="#" class="forgot-link">Forgot Password?</a>
+                    </div>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" class="premium-input"
+                            placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="pwd-toggle-btn"
+                            onclick="togglePassword('login-password', this)">👁️</button>
+                    </div>
+                    <div class="input-glow"></div>
+                </div>
+
+                <button type="submit" class="checkout-btn-main auth-btn" id="login-submit-btn">
+                    <span class="btn-text">Sign In</span>
+                    <div class="spinner" id="login-spinner"></div>
+                </button>
+            </form>
+
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+
+            <button type="button" class="auth-btn-social" onclick="simulateGoogleLogin()">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="20">
+                Continue with Google
+            </button>
+
+            <p style="text-align: center; margin-top: 25px; color: #ccc; font-size: 0.9rem;">
+                Don't have an account? <a href="signup.html" class="auth-link">Create Account</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Check if already logged in
+        checkAuth(false);
+
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const btn = document.getElementById('login-submit-btn');
+            const spinner = document.getElementById('login-spinner');
+            const btnText = btn.querySelector('.btn-text');
+            const errorMsg = document.getElementById('auth-error-msg');
+            const authCard = document.querySelector('.auth-card');
+
+            // Reset UI
+            errorMsg.style.display = 'none';
+            btn.disabled = true;
+            btnText.style.opacity = '0';
+            spinner.style.display = 'block';
+
+            // Simulate network request
+            setTimeout(() => {
+                const result = loginUser(email, password);
+
+                if (result.success) {
+                    // Success animation
+                    btn.classList.add('success-btn');
+                    btnText.innerHTML = '✓ Success';
+                    btnText.style.opacity = '1';
+                    spinner.style.display = 'none';
+
+                    setTimeout(() => {
+                        // Redirect based on query param or home
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const redirectUrl = urlParams.get('redirect') || 'index.html';
+                        window.location.href = redirectUrl;
+                    }, 1000);
+                } else {
+                    // Error Animation
+                    btn.disabled = false;
+                    btnText.style.opacity = '1';
+                    spinner.style.display = 'none';
+
+                    errorMsg.textContent = result.message;
+                    errorMsg.style.display = 'block';
+
+                    authCard.classList.add('shake-anim');
+                    setTimeout(() => authCard.classList.remove('shake-anim'), 500);
+                }
+            }, 1200);
+        });
+
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.innerHTML = '🙈';
+            } else {
+                input.type = 'password';
+                btn.innerHTML = '👁️';
+            }
+        }
+
+        function simulateGoogleLogin() {
+            alert('Google Login interface placeholder. This would integrate with Firebase or OAuth.');
+        }
+    </script>
+</body>
+
+</html>

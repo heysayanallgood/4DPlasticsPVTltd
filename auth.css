@@ -1,0 +1,228 @@
+/* Auth Specific Styling for 4D Plastics */
+
+body.page-transition-enter {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+body.page-transition-enter-active {
+    opacity: 1;
+}
+
+.auth-bg {
+    filter: hue-rotate(15deg) brightness(0.7);
+    z-index: -2;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 80px 20px 20px;
+    z-index: 2;
+    position: relative;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    background: rgba(15, 5, 20, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.auth-navbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background: transparent;
+    border-bottom: none;
+    box-shadow: none;
+}
+
+.auth-input-wrapper {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.auth-input-wrapper label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.premium-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.premium-input:focus {
+    border-color: #00f0ff;
+    background: rgba(0, 240, 255, 0.05);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.pwd-toggle-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.pwd-toggle-btn:hover {
+    color: #fff;
+}
+
+.forgot-link,
+.auth-link {
+    color: #00f0ff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: text-shadow 0.3s ease;
+}
+
+.forgot-link:hover,
+.auth-link:hover {
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.8);
+}
+
+.auth-btn {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+}
+
+.auth-btn.success-btn {
+    background: linear-gradient(45deg, #00ff88, #00b0ff);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.shake-anim {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+        border-color: #ff0044;
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+        border-color: #ff0044;
+    }
+}
+
+.auth-error {
+    background: rgba(255, 0, 68, 0.1);
+    border: 1px solid #ff0044;
+    color: #ff4466;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255, 0, 68, 0.2);
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 25px 0;
+    color: #666;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-divider span {
+    padding: 0 10px;
+    font-size: 0.85rem;
+}
+
+.auth-btn-social {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.auth-btn-social:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
