@@ -28,7 +28,8 @@
                 <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
                 <li><a href="/#contact">Contact</a></li>
                 <li><a href="{{ url_for('virtual_tour') }}">Virtual Tour</a></li>
-
+                <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
+ 
                 <!-- Link to new Cart Page -->
                 <li class="cart-nav">
                     <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; gap: 5px;">
@@ -73,7 +74,7 @@
         <div class="product-grid" id="productGrid" style="position: relative; z-index: 2;">
             {% for product in products %}
             <!-- Product -->
-            <div class="product-card product" data-id="{{ product.id }}" data-name="{{ product.name }}" data-price="{{ product.price }}" data-cat="{{ product.category }}">
+            <div class="product-card product" data-product-id="{{ product.id }}" data-name="{{ product.name }}" data-price="{{ product.price }}" data-cat="{{ product.category }}">
                 <div class="product-image-placeholder">📦</div>
                 <h3>{{ product.name }}</h3>
                 <p class="product-desc">{{ product.description }}</p>
@@ -84,6 +85,7 @@
                 <div class="product-actions">
                     <button class="btn-add-cart">Add to Cart</button>
                     <button class="btn-buy-now">Buy Now</button>
+                    <button class="btn-write-review" onclick="ReviewSystem.openModal('{{ product.id }}')" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:8px 15px; border-radius:20px; font-size:0.85rem; cursor:pointer; color:#ccc; transition:0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">✍ Write Review</button>
                 </div>
             </div>
             {% endfor %}
@@ -199,7 +201,7 @@
 
         // Initialize Loop
         document.querySelectorAll(".product").forEach(card => {
-            const id = card.dataset.id;
+            const id = card.dataset.productId;
             const name = card.dataset.name;
             const price = parseInt(card.dataset.price);
 

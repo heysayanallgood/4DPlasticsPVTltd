@@ -37,17 +37,11 @@ function updateNavbar(user) {
     document.querySelectorAll('.auth-nav-item').forEach(item => item.remove());
 
     if (user) {
+        const userName = user.name || user.username || 'User';
         const accountHtml = `
-            <li class="auth-nav-item dropdown-container">
-                <a href="#" class="nav-btn account-btn">
-                    <span class="user-avatar">${user.username.charAt(0).toUpperCase()}</span>
-                    Hi, ${user.username.split(' ')[0]}
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="/cart">🛒 My Cart</a></li>
-                    <li><hr></li>
-                    <li><a href="/logout">🚪 Logout</a></li>
-                </ul>
+            <li class="auth-nav-item" style="display:flex; align-items:center; gap:20px; margin-left:15px;">
+                <span style="color:#ffd36b; font-weight:600; font-size:1.1rem; text-transform:capitalize;">Hi, ${userName.split(' ')[0]}</span>
+                <a href="/logout" class="nav-btn login-btn" style="background:#dc3545; color:white; border:none; padding:8px 16px; border-radius:30px; font-weight:600; text-transform:uppercase; font-size:0.9rem;">Logout 🚪</a>
             </li>
         `;
         navLinks.insertAdjacentHTML('beforeend', accountHtml);

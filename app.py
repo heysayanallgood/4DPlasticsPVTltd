@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from config import Config
-from models import db, User, Message, Product, CartItem, Order, OrderItem
+from models import db, User, Message, Product, CartItem, Order, OrderItem, Review
 import os
 
 app = Flask(__name__)
@@ -147,6 +147,43 @@ def remove_from_cart():
             db.session.commit()
     return redirect(url_for('cart'))
 
+@app.route('/api/cart/update', methods=['POST'])
+@login_required
+def update_cart():
+    data = request.json
+    cart_item_id = data.get('cart_item_id')
+    action = data.get('action') # 'increase' or 'decrease'
+    
+    if not cart_item_id or not action:
+        return jsonify({'error': 'Missing parameters'}), 400
+        
+    item = CartItem.query.filter_by(id=cart_item_id, user_id=current_user.id).first()
+    if not item:
+        return jsonify({'error': 'Item not found'}), 404
+        
+    if action == 'increase':
+        item.quantity += 1
+    elif action == 'decrease' and item.quantity > 1:
+        item.quantity -= 1
+        
+    db.session.commit()
+    
+    # Recalculate totals
+    cart_items = CartItem.query.filter_by(user_id=current_user.id).all()
+    subtotal = sum(i.product.price * i.quantity for i in cart_items if i.product)
+    tax = round(subtotal * 0.05)
+    total = subtotal + tax
+    
+    return jsonify({
+        'success': True,
+        'new_quantity': item.quantity,
+        'item_total': int(item.product.price * item.quantity),
+        'subtotal': int(subtotal),
+        'tax': int(tax),
+        'grand_total': int(total)
+    })
+
+
 @app.route('/checkout', methods=['GET', 'POST'])
 @login_required
 def checkout():
@@ -172,14 +209,69 @@ def checkout():
             
         db.session.commit()
         if request.is_json:
-            return jsonify({'success': True, 'redirect': url_for('success')})
-        return redirect(url_for('success'))
+            return jsonify({'success': True, 'redirect': url_for('success', order_id=order.id)})
+        return redirect(url_for('success', order_id=order.id))
         
     return render_template('checkout.html', cart_items=cart_items, subtotal=subtotal, tax=tax, total=total)
 
 @app.route('/success')
 def success():
-    return render_template('success.html')
+    order_id = request.args.get('order_id')
+    if not order_id or order_id == 'Unknown':
+        import random
+        order_id = 'Guest-' + str(random.randint(10000, 99999))
+    return render_template('success.html', order_id=order_id)
+
+@app.route('/api/reviews', methods=['GET'])
+def get_reviews():
+    product_id = request.args.get('product')
+    if product_id:
+        reviews = Review.query.filter_by(product_id=product_id).order_by(Review.created_at.desc()).all()
+    else:
+        reviews = Review.query.order_by(Review.created_at.desc()).all()
+        
+    reviews_data = []
+    for r in reviews:
+        reviews_data.append({
+            'id': r.id,
+            'productId': r.product_id,
+            'author': r.author,
+            'avatar': r.author[0].upper() if r.author else 'A',
+            'rating': r.rating,
+            'title': r.title,
+            'text': r.text,
+            'pros': r.pros,
+            'cons': r.cons,
+            'isRecommended': r.is_recommended,
+            'isVerified': r.is_verified,
+            'date': r.created_at.strftime('%Y-%m-%d'),
+            'images': r.images.split(',') if r.images else [],
+            'helpful': r.helpful_count
+        })
+    return jsonify(reviews_data)
+
+@app.route('/api/reviews', methods=['POST'])
+def post_review():
+    data = request.json
+    try:
+        new_review = Review(
+            product_id=data.get('product_id'),
+            author=data.get('author') or 'Anonymous',
+            rating=int(data.get('rating')),
+            title=data.get('title'),
+            text=data.get('text'),
+            pros=data.get('pros'),
+            cons=data.get('cons'),
+            is_recommended=data.get('is_recommended', True),
+            is_verified=False,
+            images=','.join(data.get('images', [])) if data.get('images') else None
+        )
+        db.session.add(new_review)
+        db.session.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/api/contact', methods=['POST'])
 def contact():

@@ -8,65 +8,32 @@ const ReviewSystem = {
     currentProductId: null,
 
     // Init
-    init: function () {
-        this.loadReviews();
+    init: async function () {
+        await this.loadReviews();
         this.bindEvents();
         // Check if we are on products page or reviews page
         if (document.querySelector('.product-card')) {
             this.renderProductCardsStars();
         }
-        if (window.location.pathname.includes('reviews.html')) {
+        if (window.location.pathname.includes('reviews')) {
             this.initReviewsPage();
         }
     },
 
-    // Load from LocalStorage or Dummy Data
-    loadReviews: function () {
-        const stored = localStorage.getItem('4d_reviews');
-        if (stored) {
-            this.reviews = JSON.parse(stored);
-        } else {
-            // Seed Dummy Data
-            this.reviews = [
-                {
-                    id: '1',
-                    productId: '3 KG Plastic Container', // Matching data-name in products.html
-                    author: 'Rahul Sharma',
-                    avatar: 'R',
-                    rating: 5,
-                    title: 'Excellent clarity and strength!',
-                    text: 'I ordered 50 of these for my bakery. The plastic is crystal clear and very sturdy. Lids fit perfectly.',
-                    pros: 'Clear, Strong, Stackable',
-                    cons: 'None',
-                    isVerified: true,
-                    isRecommended: true,
-                    date: '2026-02-10',
-                    images: [],
-                    helpful: 12
-                },
-                {
-                    id: '2',
-                    productId: '3 KG Plastic Container',
-                    author: 'Priya M.',
-                    avatar: 'P',
-                    rating: 4,
-                    title: 'Good value for money',
-                    text: 'Quality is good but delivery took a bit long. Otherwise happy with the product.',
-                    pros: 'Affordable',
-                    cons: 'Slow shipping',
-                    isVerified: true,
-                    isRecommended: true,
-                    date: '2026-02-12',
-                    images: [],
-                    helpful: 3
-                }
-            ];
-            this.saveReviews();
+    // Load from Backend API
+    loadReviews: async function () {
+        try {
+            const res = await fetch('/api/reviews');
+            const data = await res.json();
+            this.reviews = data;
+        } catch (e) {
+            console.error("Failed to load reviews:", e);
+            this.reviews = [];
         }
     },
 
     saveReviews: function () {
-        localStorage.setItem('4d_reviews', JSON.stringify(this.reviews));
+        // Obsolete, saving is handled by POST /api/reviews now
     },
 
     // --- PRODUCTS PAGE HELPERS ---
@@ -142,12 +109,12 @@ const ReviewSystem = {
             <div class="pr-count">based on ${stats.count} ratings by Verified Buyers</div>
 
             <div class="review-media-strip">
-                ${images.map(img => `<img src="${img}" onclick="location.href='reviews.html?product=${encodeURIComponent(productId)}'">`).join('')}
+                ${images.map(img => `<img src="${img}" onclick="location.href='/reviews?product=${encodeURIComponent(productId)}'">`).join('')}
             </div>
 
             <div class="pr-review-cards">
                 ${reviews.map(r => `
-                    <div class="review-preview-card" onclick="location.href='reviews.html?product=${encodeURIComponent(productId)}'">
+                    <div class="review-preview-card" onclick="location.href='/reviews?product=${encodeURIComponent(productId)}'">
                         <div class="rpc-title">${r.rating}★ ${r.title}</div>
                         <div class="rpc-text">${r.text.substring(0, 80)}${r.text.length > 80 ? '...' : ''}</div>
                         <div class="rpc-footer">
@@ -158,7 +125,7 @@ const ReviewSystem = {
             </div>
 
             <button class="show-all-reviews"
-            onclick="location.href='reviews.html?product=${encodeURIComponent(productId)}'">
+            onclick="location.href='/reviews?product=${encodeURIComponent(productId)}'">
             Show all reviews →
             </button>
 
@@ -215,7 +182,7 @@ const ReviewSystem = {
         }
     },
 
-    submitReview: function (e) {
+    submitReview: async function (e) {
         e.preventDefault();
 
         // Gather Data
@@ -231,41 +198,55 @@ const ReviewSystem = {
         const images = [];
         document.querySelectorAll('#preview-area img').forEach(img => images.push(img.src));
 
-        const newReview = {
-            id: Date.now().toString(),
-            productId: this.currentProductId,
-            author: form.author.value || 'Anonymous',
-            avatar: (form.author.value || 'A').charAt(0).toUpperCase(),
+        const payload = {
+            product_id: this.currentProductId,
+            author: form.author.value,
             rating: parseInt(rating.value),
             title: form.title.value,
             text: form.text.value,
             pros: form.pros.value,
             cons: form.cons.value,
-            isRecommended: form.recommended.checked,
-            isVerified: false, // Demo
-            date: new Date().toISOString().split('T')[0],
-            images: images,
-            helpful: 0
+            is_recommended: form.recommended.checked,
+            images: images
         };
 
-        // Save
-        this.reviews.unshift(newReview);
-        this.saveReviews();
+        const btn = form.querySelector('.checkout-btn-main');
+        const origText = btn.textContent;
+        btn.textContent = "Submitting...";
+        btn.disabled = true;
 
-        // Close & Toast
-        this.closeModal();
-        this.showToast('Review Submitted! Thank you.');
+        try {
+            const res = await fetch('/api/reviews', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            
+            if (data.success) {
+                // Refresh reviews
+                await this.loadReviews();
+                
+                // Close & Toast
+                this.closeModal();
+                this.showToast('Review Submitted! Thank you.');
 
-        // Refresh UI
-        if (window.location.pathname.includes('reviews.html')) {
-            this.initReviewsPage(this.currentProductId); // Refresh
-        } else {
-            // Update stars in product page
-            // Simple reload or DOM update. DOM update:
-            // Re-run render cards? A bit heavy but okay for demo.
-            // Better: just remove old summaries and re-add.
-            document.querySelectorAll('.product-review-summary').forEach(e => e.remove());
-            this.renderProductCardsStars();
+                // Refresh UI
+                if (window.location.pathname.includes('reviews')) {
+                    this.initReviewsPage(); // Refresh
+                } else {
+                    document.querySelectorAll('.product-review-summary').forEach(el => el.remove());
+                    this.renderProductCardsStars();
+                }
+            } else {
+                alert("Failed to submit review: " + data.error);
+            }
+        } catch (err) {
+            console.error("Submission failed", err);
+            alert("Network error.");
+        } finally {
+            btn.textContent = origText;
+            btn.disabled = false;
         }
     },
 
@@ -496,7 +477,7 @@ const ReviewSystem = {
             // My createReviewCardHTML puts stars in: <div style="margin-bottom:10px;">
             // Amazon style: Title is bold, stars are gold. Badges are gray.
 
-            const badgeHTML = `<a href="reviews.html?product=${encodeURIComponent(r.productId)}" class="product-badge">Product: ${r.productId}</a><br>`;
+            const badgeHTML = `<a href="/reviews?product=${encodeURIComponent(r.productId)}" class="product-badge">Product: ${r.productId}</a><br>`;
 
             // Replaces: <div style="margin-bottom:10px;"> -> <div ...> BADGE 
             const finalHTML = card.replace('<div style="margin-bottom:10px;">', '<div style="margin-bottom:10px;">' + badgeHTML);

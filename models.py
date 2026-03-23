@@ -64,3 +64,20 @@ class OrderItem(db.Model):
     price_at_purchase = db.Column(db.Float, nullable=False)
     
     product = db.relationship('Product')
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.String(150), nullable=False) # Or link to Product model ID if you change JS
+    author = db.Column(db.String(100), nullable=False, default='Anonymous')
+    rating = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.String(200), nullable=False)
+    text = db.Column(db.Text, nullable=False)
+    pros = db.Column(db.String(200), nullable=True)
+    cons = db.Column(db.String(200), nullable=True)
+    is_recommended = db.Column(db.Boolean, default=True)
+    is_verified = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    helpful_count = db.Column(db.Integer, default=0)
+    
+    # We will serialize images as a comma separated string for simplicity
+    images = db.Column(db.Text, nullable=True)

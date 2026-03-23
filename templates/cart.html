@@ -21,6 +21,7 @@
                 <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
                 <li><a href="/#contact">Contact</a></li>
                 <li><a href="{{ url_for('virtual_tour') }}">Virtual Tour</a></li>
+                <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
 
                 <li class="cart-nav">
                     <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; gap: 5px; color: #ffd36b;">
@@ -64,10 +65,12 @@
                             <td>₹{{ item.product.price|int }}</td>
                             <td>
                                 <div class="cart-qty-control">
-                                    <span>{{ item.quantity }}</span>
+                                    <button class="qty-btn" onclick="updateQuantity('{{ item.id }}', 'decrease')">-</button>
+                                    <span id="qty-{{ item.id }}">{{ item.quantity }}</span>
+                                    <button class="qty-btn" onclick="updateQuantity('{{ item.id }}', 'increase')">+</button>
                                 </div>
                             </td>
-                            <td>₹{{ (item.product.price * item.quantity)|int }}</td>
+                            <td id="total-{{ item.id }}">₹{{ (item.product.price * item.quantity)|int }}</td>
                             <td>
                                 <form action="{{ url_for('remove_from_cart') }}" method="POST" style="margin:0;">
                                     <input type="hidden" name="cart_item_id" value="{{ item.id }}">
@@ -168,6 +171,34 @@
             window.location.href = "{{ url_for('checkout') }}";
         }
 
+        function updateQuantity(cartItemId, action) {
+            fetch('/api/cart/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cart_item_id: cartItemId, action: action })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('qty-' + cartItemId).innerText = data.new_quantity;
+                    document.getElementById('total-' + cartItemId).innerText = '₹' + data.item_total;
+                    document.getElementById('subtotal').innerText = '₹' + data.subtotal;
+                    document.getElementById('tax').innerText = '₹' + data.tax;
+                    document.getElementById('grand-total').innerText = '₹' + data.grand_total;
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(err => console.error('Error updating cart:', err));
+        }
+
+        function clearCart() {
+            if (confirm("Are you sure you want to clear your cart?")) {
+                // To implement this fully we would need a clear cart endpoint
+                // For now, we can show an alert or implement a quick loop
+                alert("Clear cart endpoint needs to be called here.");
+            }
+        }
     </script>
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
     <script>checkAuth(true);</script>
