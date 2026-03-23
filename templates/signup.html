@@ -6,8 +6,8 @@
     <title>Create Account - 4D Plastics</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 
     <!-- 🔹 NAVBAR (Simplified for Auth Pages) -->
     <header class="navbar auth-navbar">
-        <div class="logo reveal active" style="cursor:pointer;" onclick="window.location.href='index.html'">4D Plastics
+        <div class="logo reveal active" style="cursor:pointer;" onclick="window.location.href='/'">4D Plastics
         </div>
     </header>
 
@@ -77,12 +77,12 @@
             </form>
 
             <p style="text-align: center; margin-top: 25px; color: #ccc; font-size: 0.9rem;">
-                Already have an account? <a href="login.html" class="auth-link">Sign In</a>
+                Already have an account? <a href="{{ url_for('login') }}" class="auth-link">Sign In</a>
             </p>
         </div>
     </div>
 
-    <script src="auth.js"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
     <script>
         // Check if already logged in
         checkAuth(false);
@@ -119,11 +119,15 @@
             btnText.style.opacity = '0';
             spinner.style.display = 'block';
 
-            // Simulate network request
-            setTimeout(() => {
-                const result = registerUser(name, email, password);
-
-                if (result.success) {
+            // Make network request
+            fetch('/signup', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: name, email: email, password: password})
+            })
+            .then(res => res.json().then(data => ({status: res.status, ok: res.ok, data})))
+            .then(res => {
+                if (res.ok && res.data.success) {
                     // Success animation
                     btn.classList.add('success-btn');
                     btnText.innerHTML = '✓ Account Created';
@@ -131,16 +135,22 @@
                     spinner.style.display = 'none';
 
                     setTimeout(() => {
-                        window.location.href = 'index.html'; // Redirect to home
+                        window.location.href = res.data.redirect || '/'; // Redirect to home
                     }, 1200);
                 } else {
                     // Show error from backend
                     btn.disabled = false;
                     btnText.style.opacity = '1';
                     spinner.style.display = 'none';
-                    showError(result.message);
+                    showError(res.data.error || 'Signup failed');
                 }
-            }, 1500);
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btnText.style.opacity = '1';
+                spinner.style.display = 'none';
+                showError('Network error occurred');
+            });
 
             function showError(msg) {
                 errorMsg.textContent = msg;

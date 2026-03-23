@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>4D Plastics Private Limited</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -21,12 +21,12 @@
         <div class="logo reveal">4D Plastics</div>
         <nav>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="virtual-tour.html">Virtual Tour</a></li>
+                <li><a href="/#home">Home</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="/#contact">Contact</a></li>
+                <li><a href="{{ url_for('virtual_tour') }}">Virtual Tour</a></li>
             </ul>
         </nav>
     </header>
@@ -41,7 +41,7 @@
         <div class="hero-content">
             <h1>4D Plastics Private Limited</h1>
             <p>Precision in Plastic Manufacturing</p>
-            <a href="#about" class="btn">Discover More</a>
+            <a href="/#about" class="btn">Discover More</a>
         </div>
     </section>
 
@@ -164,7 +164,7 @@
         });
     </script>
 
-    <script src="preloader.js"></script>
+    <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
     <script>
         const form = document.getElementById("contact-form");
         const formGroups = document.querySelectorAll(".form-group");
@@ -188,12 +188,27 @@
             });
 
             if (isValid) {
-                alert("Form submitted successfully!");
-                form.reset();
-
-                // Remove green borders after reset
-                formGroups.forEach(group => {
-                    group.classList.remove("success");
+                const name = formGroups[0].querySelector("input").value;
+                const email = formGroups[1].querySelector("input").value;
+                const message = formGroups[2].querySelector("textarea").value;
+                
+                fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({name, email, message})
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success) {
+                        alert("Message sent successfully!");
+                        form.reset();
+                        formGroups.forEach(group => group.classList.remove("success"));
+                    } else {
+                        alert("Failed to send message: " + (data.error || "Unknown error"));
+                    }
+                })
+                .catch(err => {
+                    alert("Network error, could not send message.");
                 });
             }
         });
@@ -224,14 +239,14 @@
         </div>
         <div class="brand-glow"></div>
 
-        <img src="D:\coding_contents\4d-plastics-website\Screenshot 2026-02-06 132339.png"
+        <img src="{{ url_for('static', filename='images/Screenshot 2026-02-06 132339.png') }}"
             alt="4D Plastics Private Limited Logo" class="brand-logo">
 
         <h2>4D Plastics Private Limited</h2>
         <p>Precision • Quality • Trust</p>
     </section>
 
-    <script src="auth.js"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 
 </html>

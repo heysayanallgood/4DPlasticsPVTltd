@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- 🔹 NAVBAR -->
+    <header class="navbar">
+        <div class="logo reveal">4D Plastics</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/#home">Home</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="/#contact">Contact</a></li>
+                <li><a href="{{ url_for('virtual_tour') }}">Virtual Tour</a></li>
+
+                <li class="cart-nav">
+                    <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; gap: 5px; color: #ffd36b;">
+                        🛒 <span id="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 🔹 CART SECTION -->
+    <section class="about" style="min-height:100vh; padding-top:100px;">
+        <div class="background">
+            <span></span><span></span><span></span>
+        </div>
+
+        <div class="cart-container reveal">
+            <div class="cart-header">
+                <h2>Your Shopping Cart</h2>
+                <button onclick="clearCart()" class="remove-item-btn" style="font-size: 0.9rem;">Clear All</button>
+            </div>
+
+            <div id="cart-content">
+                <!-- Cart Items Table will be injected here -->
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items-body">
+                        {% for item in items %}
+                        <tr>
+                            <td>
+                                <div class="cart-item-name">{{ item.product.name }}</div>
+                            </td>
+                            <td>₹{{ item.product.price|int }}</td>
+                            <td>
+                                <div class="cart-qty-control">
+                                    <span>{{ item.quantity }}</span>
+                                </div>
+                            </td>
+                            <td>₹{{ (item.product.price * item.quantity)|int }}</td>
+                            <td>
+                                <form action="{{ url_for('remove_from_cart') }}" method="POST" style="margin:0;">
+                                    <input type="hidden" name="cart_item_id" value="{{ item.id }}">
+                                    <button type="submit" class="remove-item-btn">×</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" style="text-align:center;">Your cart is empty.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="cart-summary">
+                    <div class="summary-box">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₹{{ subtotal|int }}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (5%)</span>
+                            <span id="tax">₹{{ tax|int }}</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="grand-total">₹{{ total|int }}</span>
+                        </div>
+
+                        <button class="checkout-btn-main" onclick="proceedToCheckout()">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="empty-cart" class="empty-cart-msg" style="display: none;">
+                <p>Your cart is empty.</p>
+                <a href="{{ url_for('products') }}" class="btn" style="margin-top: 20px;">Browse Products</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer reveal" id="contact">
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Registered Office</h3>
+                <p>
+                    20/C, Surath Banerjee Lane,<br>
+                    Konnagar, Hooghly,<br>
+                    Serampore Uttarpara,<br>
+                    West Bengal – 712235
+                </p>
+            </div>
+
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919051746143" class="contact-link">+91 9051746143</a><br>
+                    📞 <a href="tel:+919432249082" class="contact-link">+91 9432249082</a><br>
+                    📞 <a href="tel:+918334031478" class="contact-link">+91 8334031478</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">
+                        suparnasubhashis@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Reveal Animation
+        const revealElements = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, { threshold: 0.15 });
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+
+    <script>
+        /* =========================
+           CART PAGE LOGIC (Backend Rendered)
+        ========================= */
+
+        function proceedToCheckout() {
+            window.location.href = "{{ url_for('checkout') }}";
+        }
+
+    </script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script>checkAuth(true);</script>
+</body>
+
+</html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Gallery - 4D Plastics</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -21,12 +21,12 @@
         <div class="logo reveal">4D Plastics</div>
         <nav>
             <ul class="nav-links">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="virtual-tour.html">Virtual Tour</a></li>
+                <li><a href="/#home">Home</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="/#contact">Contact</a></li>
+                <li><a href="{{ url_for('virtual_tour') }}">Virtual Tour</a></li>
             </ul>
         </nav>
     </header>
@@ -59,14 +59,14 @@
 
             <!-- FACTORY IMAGES -->
             <div class="gallery-item" data-category="factory">
-                <img src="WhatsApp Image 2026-02-05 at 6.49.21 PM.jpeg" alt="Factory Floor Overview">
+                <img src="{{ url_for('static', filename='images/WhatsApp Image 2026-02-05 at 6.49.21 PM.jpeg') }}" alt="Factory Floor Overview">
                 <div class="overlay">
                     <span class="zoom-icon">🔍</span>
                     <p>Factory Floor</p>
                 </div>
             </div>
             <div class="gallery-item" data-category="factory">
-                <img src="WhatsApp Image 2026-02-05 at 6.49.25 PM.jpeg" alt="Production Line">
+                <img src="{{ url_for('static', filename='images/WhatsApp Image 2026-02-05 at 6.49.25 PM.jpeg') }}" alt="Production Line">
                 <div class="overlay">
                     <span class="zoom-icon">🔍</span>
                     <p>Production Line</p>
@@ -75,14 +75,14 @@
 
             <!-- MACHINERY IMAGES -->
             <div class="gallery-item" data-category="molding">
-                <img src="WhatsApp Image 2026-02-05 at 6.49.28 PM (1).jpeg" alt="Injection Molding Machine">
+                <img src="{{ url_for('static', filename='images/WhatsApp Image 2026-02-05 at 6.49.28 PM (1).jpeg') }}" alt="Injection Molding Machine">
                 <div class="overlay">
                     <span class="zoom-icon">🔍</span>
                     <p>Molding Machine</p>
                 </div>
             </div>
             <div class="gallery-item" data-category="molding">
-                <img src="WhatsApp Image 2026-02-05 at 7.35.45 PM.jpeg" alt="High Precision Machinery">
+                <img src="{{ url_for('static', filename='images/WhatsApp Image 2026-02-05 at 7.35.45 PM.jpeg') }}" alt="High Precision Machinery">
                 <div class="overlay">
                     <span class="zoom-icon">🔍</span>
                     <p>Precision Tech</p>
@@ -91,21 +91,21 @@
 
             <!-- PRODUCTS IMAGES -->
             <div class="gallery-item" data-category="products">
-                <img src="WhatsApp Image 2026-02-05 at 6.49.24 PM.jpeg" alt="Premium Jars">
+                <img src="{{ url_for('static', filename='images/WhatsApp Image 2026-02-05 at 6.49.24 PM.jpeg') }}" alt="Premium Jars">
                 <div class="overlay">
                     <span class="zoom-icon">🔍</span>
                     <p>Premium Jars</p>
                 </div>
             </div>
             <div class="gallery-item" data-category="products">
-                <img src="WhatsApp Image 2026-02-05 at 7.35.44 PM (2).jpeg" alt="Bulk Storage Containers">
+                <img src="{{ url_for('static', filename='images/WhatsApp Image 2026-02-05 at 7.35.44 PM (2).jpeg') }}" alt="Bulk Storage Containers">
                 <div class="overlay">
                     <span class="zoom-icon">🔍</span>
                     <p>Storage Units</p>
                 </div>
             </div>
             <div class="gallery-item" data-category="products">
-                <img src="WhatsApp Image 2026-02-05 at 6.50.14 PM.jpeg" alt="Finished Goods">
+                <img src="{{ url_for('static', filename='images/WhatsApp Image 2026-02-05 at 6.50.14 PM.jpeg') }}" alt="Finished Goods">
                 <div class="overlay">
                     <span class="zoom-icon">🔍</span>
                     <p>Finished Goods</p>
@@ -113,7 +113,7 @@
             </div>
 
             <div class="gallery-item" data-category="factory">
-                <img src="WhatsApp Image 2026-02-05 at 7.35.44 PM.jpeg" alt="Quality Control">
+                <img src="{{ url_for('static', filename='images/WhatsApp Image 2026-02-05 at 7.35.44 PM.jpeg') }}" alt="Quality Control">
                 <div class="overlay">
                     <span class="zoom-icon">🔍</span>
                     <p>Quality Control</p>
@@ -184,7 +184,7 @@
     <button id="backToTop">↑</button>
 
     <!-- SCRIPTS -->
-    <script src="preloader.js"></script>
+    <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
     <script>
         // Back to Top Logic
         const backToTopBtn = document.getElementById("backToTop");
@@ -361,7 +361,7 @@
         });
 
     </script>
-    <script src="auth.js"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 
 </html>

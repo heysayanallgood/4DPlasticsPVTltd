@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>Customer Reviews - 4D Plastics</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="reviews.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reviews.css') }}">
 </head>
 
 <body>
@@ -16,12 +16,12 @@
         <div class="logo reveal">4D Plastics</div>
         <nav>
             <ul class="nav-links">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="/#home">Home</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="/#contact">Contact</a></li>
                 <li class="cart-nav">
-                    <a href="cart.html">🛒</a>
+                    <a href="{{ url_for('cart') }}">🛒</a>
                 </li>
             </ul>
         </nav>
@@ -230,12 +230,12 @@
     </div>
 
     <!-- Scripts -->
-    <script src="review-system.js"></script>
+    <script src="{{ url_for('static', filename='js/review-system.js') }}"></script>
     <script>
         // Init logic specifically for this page (handled by review-system.js already, but setting product context if needed)
         // ReviewSystem.init() handles page detection.
     </script>
-    <script src="auth.js"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 
 </html>

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>Products - 4D Plastics</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="reviews.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reviews.css') }}">
 </head>
 
 <body>
@@ -22,16 +22,16 @@
         <div class="logo reveal">4D Plastics</div>
         <nav>
             <ul class="nav-links">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="virtual-tour.html">Virtual Tour</a></li>
+                <li><a href="/#home">Home</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="/#contact">Contact</a></li>
+                <li><a href="{{ url_for('virtual_tour') }}">Virtual Tour</a></li>
 
                 <!-- Link to new Cart Page -->
                 <li class="cart-nav">
-                    <a href="cart.html" style="display: flex; align-items: center; gap: 5px;">
+                    <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; gap: 5px;">
                         🛒 <span id="cart-count">0</span>
                     </a>
                 </li>
@@ -71,64 +71,22 @@
 
         <!-- NEW PREMIUM GRID -->
         <div class="product-grid" id="productGrid" style="position: relative; z-index: 2;">
-
-            <!-- Product 1 -->
-            <div class="product-card product" data-name="3 KG Plastic Container" data-price="100" data-cat="containers">
+            {% for product in products %}
+            <!-- Product -->
+            <div class="product-card product" data-id="{{ product.id }}" data-name="{{ product.name }}" data-price="{{ product.price }}" data-cat="{{ product.category }}">
                 <div class="product-image-placeholder">📦</div>
-                <h3>3 KG Plastic Container</h3>
-                <p class="product-desc">
-                    Suitable for storage of biscuits, bakery products,
-                    cakes, toffees, toast biscuits, and sweet bread.
-                </p>
+                <h3>{{ product.name }}</h3>
+                <p class="product-desc">{{ product.description }}</p>
                 <div class="product-details">
-                    <p><strong>Capacity:</strong> 3 Kilograms</p>
                     <p><strong>Material:</strong> Food-grade plastic</p>
                 </div>
-                <span class="product-price">₹100</span>
+                <span class="product-price">₹{{ product.price|int }}</span>
                 <div class="product-actions">
                     <button class="btn-add-cart">Add to Cart</button>
                     <button class="btn-buy-now">Buy Now</button>
                 </div>
             </div>
-
-            <!-- Product 2 -->
-            <div class="product-card product" data-name="5 KG Plastic Container" data-price="300" data-cat="containers">
-                <div class="product-image-placeholder">📦</div>
-                <h3>5 KG Plastic Container</h3>
-                <p class="product-desc">
-                    Ideal for medium-scale storage of biscuits,
-                    bakery items, cakes, and sweet products.
-                </p>
-                <div class="product-details">
-                    <p><strong>Capacity:</strong> 5 Kilograms</p>
-                    <p><strong>Material:</strong> Food-grade plastic</p>
-                </div>
-                <span class="product-price">₹300</span>
-                <div class="product-actions">
-                    <button class="btn-add-cart">Add to Cart</button>
-                    <button class="btn-buy-now">Buy Now</button>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="product-card product" data-name="6 KG Plastic Container" data-price="500" data-cat="containers">
-                <div class="product-image-placeholder">📦</div>
-                <h3>6 KG Plastic Container</h3>
-                <p class="product-desc">
-                    Best suited for bulk storage in bakeries,
-                    confectioneries, and food processing units.
-                </p>
-                <div class="product-details">
-                    <p><strong>Capacity:</strong> 6 Kilograms</p>
-                    <p><strong>Material:</strong> Food-grade plastic</p>
-                </div>
-                <span class="product-price">₹500</span>
-                <div class="product-actions">
-                    <button class="btn-add-cart">Add to Cart</button>
-                    <button class="btn-buy-now">Buy Now</button>
-                </div>
-            </div>
-
+            {% endfor %}
         </div>
     </section>
 
@@ -172,7 +130,7 @@
     <button id="backToTop">↑</button>
 
     <!-- SCRIPTS -->
-    <script src="preloader.js"></script>
+    <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
     <script>
         // Back to Top Logic
         const backToTopBtn = document.getElementById("backToTop");
@@ -208,49 +166,51 @@
 
     <script>
         /* =========================
-           CART LOGIC (LocalStorage)
+           CART LOGIC (Backend Integrated)
         ========================= */
 
         function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const count = cart.reduce((acc, item) => acc + item.qty, 0);
-            document.getElementById("cart-count").textContent = count;
+            // Optional: could fetch /api/cart/count
         }
 
-        function addToCart(name, price, redirect = false) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const existingItem = cart.find(item => item.name === name);
-
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cart.push({ name, price, qty: 1 });
-            }
-
-            localStorage.setItem("cart", JSON.stringify(cart));
-            updateCartCount();
-
-            if (redirect) {
-                window.location.href = "cart.html";
-            } else {
-                // Show simple feedback
-                alert(`✅ ${name} added to cart!`);
-            }
+        function addToCart(id, name, price, redirect = false) {
+            fetch('/api/cart/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ product_id: id, quantity: 1 })
+            }).then(res => {
+                if(res.status === 401) {
+                    alert("Please log in to add to cart.");
+                    window.location.href = '/login';
+                    return null;
+                }
+                return res.json();
+            }).then(data => {
+                if(data && data.success) {
+                    if (redirect) {
+                        window.location.href = "/cart";
+                    } else {
+                        // Show simple feedback
+                        alert(`✅ ${name} added to cart!`);
+                    }
+                }
+            }).catch(err => console.error("Error adding to cart:", err));
         }
 
         // Initialize Loop
         document.querySelectorAll(".product").forEach(card => {
+            const id = card.dataset.id;
             const name = card.dataset.name;
             const price = parseInt(card.dataset.price);
 
             // Add to Cart Button
             card.querySelector(".btn-add-cart").addEventListener("click", () => {
-                addToCart(name, price, false);
+                addToCart(id, name, price, false);
             });
 
             // Buy Now Button
             card.querySelector(".btn-buy-now").addEventListener("click", () => {
-                addToCart(name, price, true);
+                addToCart(id, name, price, true);
             });
         });
 
@@ -379,9 +339,9 @@
     </script>
 
     <!-- REVIEW SYSTEM JS -->
-    <script src="review-system.js"></script>
+    <script src="{{ url_for('static', filename='js/review-system.js') }}"></script>
 
-    <script src="auth.js"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 
 </html>

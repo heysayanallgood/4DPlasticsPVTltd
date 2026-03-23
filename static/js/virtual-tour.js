@@ -1,31 +1,31 @@
 const steps = [
     {
         title: "Factory Floor",
-        video: "D:/coding_contents/4d-plastics-website/WhatsApp Video 2026-02-06 at 7.03.04 PM.mp4",
+        video: "/static/videos/WhatsApp Video 2026-02-06 at 7.03.04 PM.mp4",
         desc: "Our factory floor is designed for efficient workflow, safety, and smooth machine operations.",
         short: "Floor"
     },
     {
         title: "Injection Molding Machine",
-        video: "D:/coding_contents/4d-plastics-website/VID-20260209-WA0007~3.mp4",
+        video: "/static/videos/VID-20260209-WA0007~3.mp4",
         desc: "Plastic granules are melted and injected into molds to form precise jar shapes.",
         short: "Molding"
     },
     {
         title: "Injection Blow Molding",
-        video: "D:/coding_contents/4d-plastics-website/WhatsApp Video 2026-02-06 at 7.03.07 PM.mp4",
+        video: "/static/videos/WhatsApp Video 2026-02-06 at 7.03.07 PM.mp4",
         desc: "Compressed air expands molten plastic to form strong and uniform hollow containers.",
         short: "Blow"
     },
     {
         title: "Packaging Finished Goods",
-        video: "D:/coding_contents/4d-plastics-website/WhatsApp Video 2026-02-06 at 7.13.50 PM.mp4",
+        video: "/static/videos/WhatsApp Video 2026-02-06 at 7.13.50 PM.mp4",
         desc: "Jars are inspected and packed.",
         short: "Packing"
     },
     {
         title: "Finished Goods",
-        video: "D:/coding_contents/4d-plastics-website/VID-20260209-WA0007~2.mp4",
+        video: "/static/videos/VID-20260209-WA0007~2.mp4",
         desc: "Finished jars are prepared for dispatch.",
         short: "Dispatch"
     }

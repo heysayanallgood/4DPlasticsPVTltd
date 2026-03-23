@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Order Successful - 4D Plastics</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -35,7 +35,7 @@
                 <h3 id="order-id" class="text-gradient-gold" style="font-size:1.8rem;">#Analyzing...</h3>
             </div>
 
-            <button onclick="window.location.href='products.html'" class="checkout-btn-main"
+            <button onclick="window.location.href='/products'" class="checkout-btn-main"
                 style="background:linear-gradient(135deg, #c9a24d, #d4af37);">
                 Continue Shopping
             </button>
@@ -51,7 +51,7 @@
         localStorage.removeItem("cart");
     </script>
 
-    <script src="auth.js"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
     <script>checkAuth(true);</script>
 </body>
 

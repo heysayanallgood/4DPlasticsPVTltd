@@ -6,7 +6,7 @@
     <title>Secure Checkout - 4D Plastics</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -154,27 +154,32 @@
                 Order Summary</h3>
 
             <div id="order-items-list" style="max-height:300px; overflow-y:auto; margin-bottom:20px;">
-                <!-- Items Injected Here -->
+                {% for item in cart_items %}
+                <div class="order-row">
+                    <span>{{ item.product.name }} <span style="color:#777; margin-left:5px;">x{{ item.quantity }}</span></span>
+                    <span>₹{{ (item.product.price * item.quantity)|int }}</span>
+                </div>
+                {% endfor %}
             </div>
 
             <div class="order-row">
                 <span>Subtotal</span>
-                <span id="summary-subtotal">₹0</span>
+                <span id="summary-subtotal">₹{{ subtotal|int }}</span>
             </div>
             <div class="order-row">
                 <span>Tax (5%)</span>
-                <span id="summary-tax">₹0</span>
+                <span id="summary-tax">₹{{ tax|int }}</span>
             </div>
             <div class="order-row total">
                 <span>Total Amount</span>
-                <span id="summary-total" style="color:#ffd700;">₹0</span>
+                <span id="summary-total" style="color:#ffd700;">₹{{ total|int }}</span>
             </div>
 
             <div style="margin-top:30px; text-align:center;">
                 <p style="color:#777; font-size:0.8rem;">Secure Encrypted Transaction 🔒</p>
             </div>
 
-            <button onclick="window.location.href='cart.html'"
+            <button onclick="window.location.href='/cart'"
                 style="background:none; border:none; color:#bbb; width:100%; margin-top:15px; cursor:pointer; text-decoration:underline;">
                 Edit Cart
             </button>
@@ -220,35 +225,7 @@
 
     <script>
         // Init Order Summary
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const itemsList = document.getElementById("order-items-list");
-
-        if (cart.length === 0) {
-            window.location.href = 'products.html'; // Redirect if empty
-        }
-
-        let subtotal = 0;
-        itemsList.innerHTML = "";
-
-        cart.forEach(item => {
-            const itemTotal = item.price * item.qty;
-            subtotal += itemTotal;
-
-            const div = document.createElement("div");
-            div.className = "order-row";
-            div.innerHTML = `
-                <span>${item.name} <span style="color:#777; margin-left:5px;">x${item.qty}</span></span>
-                <span>₹${itemTotal}</span>
-            `;
-            itemsList.appendChild(div);
-        });
-
-        const tax = Math.round(subtotal * 0.05);
-        const total = subtotal + tax;
-
-        document.getElementById("summary-subtotal").textContent = "₹" + subtotal;
-        document.getElementById("summary-tax").textContent = "₹" + tax;
-        document.getElementById("summary-total").textContent = "₹" + total;
+        // Managed by Backend Jinja2 variables
 
         // UI Functions
         function showPayment(method, btn) {
@@ -293,13 +270,27 @@
                 activeBtn.disabled = true;
             }
 
-            setTimeout(() => {
-                localStorage.removeItem("cart");
-                window.location.href = "success.html";
-            }, 2000);
+            fetch('/checkout', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({})
+            }).then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    window.location.href = data.redirect || "{{ url_for('success') }}";
+                } else {
+                    alert("Payment failed: " + data.error);
+                }
+            }).catch(e => {
+                alert("Network error.");
+                if (activeBtn) {
+                    activeBtn.textContent = "Pay Securely";
+                    activeBtn.disabled = false;
+                }
+            });
         }
     </script>
-    <script src="auth.js"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
     <script>checkAuth(true);</script>
 </body>
 
