@@ -23,11 +23,7 @@
                 <li><a href="{{ url_for('virtual_tour') }}">Virtual Tour</a></li>
                 <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
 
-                <li class="cart-nav">
-                    <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; gap: 5px; color: #ffd36b;">
-                        🛒 <span id="cart-count">0</span>
-                    </a>
-                </li>
+                <!-- Dynamic items added via auth.js -->
             </ul>
         </nav>
     </header>
@@ -185,6 +181,7 @@
                     document.getElementById('subtotal').innerText = '₹' + data.subtotal;
                     document.getElementById('tax').innerText = '₹' + data.tax;
                     document.getElementById('grand-total').innerText = '₹' + data.grand_total;
+                    if (window.updateCartCount) window.updateCartCount();
                 } else {
                     alert('Error: ' + data.error);
                 }

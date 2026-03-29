@@ -31,11 +31,7 @@
                 <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
  
                 <!-- Link to new Cart Page -->
-                <li class="cart-nav">
-                    <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; gap: 5px;">
-                        🛒 <span id="cart-count">0</span>
-                    </a>
-                </li>
+    <!-- Auth items will be dynamically added via auth.js -->
             </ul>
         </nav>
     </header>
@@ -171,9 +167,6 @@
            CART LOGIC (Backend Integrated)
         ========================= */
 
-        function updateCartCount() {
-            // Optional: could fetch /api/cart/count
-        }
 
         function addToCart(id, name, price, redirect = false) {
             fetch('/api/cart/add', {
@@ -194,6 +187,7 @@
                     } else {
                         // Show simple feedback
                         alert(`✅ ${name} added to cart!`);
+                        if (window.updateCartCount) window.updateCartCount();
                     }
                 }
             }).catch(err => console.error("Error adding to cart:", err));

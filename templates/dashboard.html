@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard - 4D Plastics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+
+<body>
+
+    <!-- 🔮 PRELOADER -->
+    <div id="preloader">
+        <div class="loader-text">Loading 4D Plastics...</div>
+        <div class="loader-ring"></div>
+    </div>
+
+    <!-- 🔹 NAVBAR -->
+    <header class="navbar">
+        <div class="logo reveal">4D Plastics</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/#home">Home</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="/#contact">Contact</a></li>
+                <li><a href="{{ url_for('virtual_tour') }}">Virtual Tour</a></li>
+                <li><a href="{{ url_for('reviews') }}">Reviews</a></li>
+ 
+                <!-- Dashboard/Cart dynamic content will follow -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 🔹 DASHBOARD SECTION -->
+    <section class="dashboard-section">
+        <div class="premium-bg-animated" style="position: absolute; inset:0; z-index:-1; opacity: 0.5;"></div>
+        <div class="gold-dust" style="position: absolute; inset:0; z-index:-1;">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="dashboard-container reveal active">
+            
+            <!-- SIDEBAR -->
+            <div class="dash-sidebar">
+                <div class="dash-user-info">
+                    <div class="dash-avatar">
+                        {{ user.username[0]|upper if user.username else 'U' }}
+                    </div>
+                    <h3 style="margin: 0; font-size: 20px;">{{ user.username }}</h3>
+                    <p style="color: #aaa; font-size: 14px;">{{ user.email }}</p>
+                </div>
+                
+                <ul class="dash-nav">
+                    <li class="active" onclick="switchTab('profile', this)">👤 Profile</li>
+                    <li onclick="switchTab('orders', this)">📦 My Orders</li>
+                    <li onclick="switchTab('settings', this)">⚙️ Settings</li>
+                    <li onclick="window.location.href='{{ url_for('logout') }}'" style="margin-top: auto; color: #ff4b4b;">🚪 Logout</li>
+                </ul>
+            </div>
+
+            <!-- MAIN CONTENT -->
+            <div class="dash-content">
+                
+                <!-- PROFILE TAB -->
+                <div id="tab-profile" class="dash-tab-pane active">
+                    <h2>My Profile</h2>
+                    <div class="profile-details">
+                        <div class="detail-group">
+                            <label>Username</label>
+                            <p>{{ user.username }}</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Email Address</label>
+                            <p>{{ user.email }}</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Account Created</label>
+                            <p>{{ user.created_at.strftime('%B %d, %Y') if user.created_at else 'Unknown' }}</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Total Orders</label>
+                            <p>{{ orders|length }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ORDERS TAB -->
+                <div id="tab-orders" class="dash-tab-pane">
+                    <h2>My Orders</h2>
+                    {% if orders %}
+                    <div class="orders-table-wrapper">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td>#{{ order.id }}</td>
+                                    <td>{{ order.created_at.strftime('%b %d, %Y') if order.created_at else 'N/A' }}</td>
+                                    <td>₹{{ order.total_amount|int }}</td>
+                                    <td>
+                                        <span class="status-badge {{ order.status|lower }}">{{ order.status }}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div style="text-align: center; padding: 40px; background: rgba(255,255,255,0.02); border-radius: 10px;">
+                        <p style="color: #aaa; margin-bottom: 20px;">You haven't placed any orders yet.</p>
+                        <a href="{{ url_for('products') }}" class="btn" style="text-decoration: none; display: inline-block;">Browse Products</a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- SETTINGS TAB -->
+                <div id="tab-settings" class="dash-tab-pane">
+                    <h2>Change Password</h2>
+                    <form class="settings-form" id="password-form">
+                        <div class="form-group" style="width: 100%;">
+                            <label style="color: #aaa; font-size: 13px; display: block; margin-bottom: 5px;">Current Password</label>
+                            <input type="password" id="current_password" required>
+                        </div>
+                        <div class="form-group" style="width: 100%;">
+                            <label style="color: #aaa; font-size: 13px; display: block; margin-bottom: 5px;">New Password</label>
+                            <input type="password" id="new_password" required>
+                        </div>
+                        <div class="form-group" style="width: 100%;">
+                            <label style="color: #aaa; font-size: 13px; display: block; margin-bottom: 5px;">Confirm New Password</label>
+                            <input type="password" id="confirm_password" required>
+                        </div>
+                        
+                        <div id="pwd-msg" style="margin-top: 10px; font-size: 14px; display: none;"></div>
+                        
+                        <button type="submit" id="pwd-submit-btn">Update Password</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 🔹 FOOTER -->
+    <footer class="footer reveal" id="contact">
+        <div class="footer-container">
+            <div class="footer-box reveal">
+                <h3>4D Plastics Pvt. Ltd.</h3>
+                <p>Manufacture of high-quality plastic products.</p>
+            </div>
+            <div class="footer-box reveal">
+                <h3>Contact</h3>
+                <p>
+                    📞 <a href="tel:+919051746143" class="contact-link">+91 9051746143</a><br>
+                    ✉️ <a href="mailto:suparnasubhashis@gmail.com" class="contact-link">suparnasubhashis@gmail.com</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom reveal">
+            © 2026 4D Plastics Private Limited. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script>
+        // Tab Switching Logic
+        function switchTab(tabId, el) {
+            // Remove active classes
+            document.querySelectorAll('.dash-nav li').forEach(li => li.classList.remove('active'));
+            document.querySelectorAll('.dash-tab-pane').forEach(pane => pane.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding pane
+            el.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        // Handle Password Change
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const current = document.getElementById('current_password').value;
+            const newPwd = document.getElementById('new_password').value;
+            const confirm = document.getElementById('confirm_password').value;
+            const msgEl = document.getElementById('pwd-msg');
+            const btn = document.getElementById('pwd-submit-btn');
+
+            if (newPwd !== confirm) {
+                msgEl.style.display = 'block';
+                msgEl.style.color = '#ff4b4b';
+                msgEl.textContent = 'New passwords do not match!';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Updating...';
+
+            fetch('/api/user/change_password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    current_password: current,
+                    new_password: newPwd,
+                    confirm_password: confirm
+                })
+            })
+            .then(res => res.json().then(data => ({status: res.status, ok: res.ok, data})))
+            .then(res => {
+                msgEl.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Update Password';
+                
+                if (res.ok && res.data.success) {
+                    msgEl.style.color = '#2ecc71';
+                    msgEl.textContent = res.data.message || 'Password changed successfully!';
+                    document.getElementById('password-form').reset();
+                    setTimeout(() => { msgEl.style.display = 'none'; }, 3000);
+                } else {
+                    msgEl.style.color = '#ff4b4b';
+                    msgEl.textContent = res.data.error || 'Failed to update password.';
+                }
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.textContent = 'Update Password';
+                msgEl.style.display = 'block';
+                msgEl.style.color = '#ff4b4b';
+                msgEl.textContent = 'Network error occurred.';
+            });
+        });
+    </script>
+</body>
+</html>

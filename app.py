@@ -55,8 +55,8 @@ def signup():
         
         login_user(user)
         if request.is_json:
-            return jsonify({'success': True, 'redirect': url_for('index')})
-        return redirect(url_for('index'))
+            return jsonify({'success': True, 'redirect': url_for('dashboard')})
+        return redirect(url_for('dashboard'))
         
     return render_template('signup.html')
 
@@ -74,8 +74,8 @@ def login():
         if user and user.check_password(password):
             login_user(user)
             if request.is_json:
-                return jsonify({'success': True, 'redirect': url_for('index')})
-            return redirect(url_for('index'))
+                return jsonify({'success': True, 'redirect': url_for('dashboard')})
+            return redirect(url_for('dashboard'))
             
         return jsonify({'error': 'Invalid credentials'}), 401
         
@@ -183,6 +183,13 @@ def update_cart():
         'grand_total': int(total)
     })
 
+@app.route('/api/cart/count')
+def cart_count():
+    if current_user.is_authenticated:
+        count = db.session.query(db.func.sum(CartItem.quantity)).filter(CartItem.user_id == current_user.id).scalar() or 0
+        return jsonify({'count': count})
+    return jsonify({'count': 0})
+
 
 @app.route('/checkout', methods=['GET', 'POST'])
 @login_required
@@ -288,6 +295,34 @@ def contact():
     db.session.add(new_message)
     db.session.commit()
     return jsonify({'success': True, 'message': 'Message sent successfully'})
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    # Fetch user's orders, sorted by date descending (assuming id correlates or created_at exists)
+    user_orders = Order.query.filter_by(user_id=current_user.id).order_by(Order.created_at.desc()).all()
+    return render_template('dashboard.html', user=current_user, orders=user_orders)
+
+@app.route('/api/user/change_password', methods=['POST'])
+@login_required
+def change_password():
+    data = request.json
+    current_password = data.get('current_password')
+    new_password = data.get('new_password')
+    confirm_password = data.get('confirm_password')
+
+    if not current_password or not new_password or not confirm_password:
+        return jsonify({'error': 'All fields are required.'}), 400
+
+    if new_password != confirm_password:
+        return jsonify({'error': 'New passwords do not match.'}), 400
+
+    if not current_user.check_password(current_password):
+        return jsonify({'error': 'Incorrect current password.'}), 400
+
+    current_user.set_password(new_password)
+    db.session.commit()
+    return jsonify({'success': True, 'message': 'Password changed successfully.'})
 
 if __name__ == '__main__':
     app.run(debug=True)
